@@ -19,7 +19,9 @@
 
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2"><i class="fas fa-car text-[#E10600] text-2xl"></i><span class="font-extrabold text-2xl">X CARS <span class="text-[#E10600]">RENTAL</span></span></div>
+        <div class="flex items-center">
+            <img src="images/xcarlogo.jpeg" class="h-10 md:h-12 w-auto rounded-lg" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/200x60/E10600/white?text=X+CARS'">
+        </div>
         <nav class="hidden md:flex gap-8 font-semibold"><a href="index.html">Home</a><a href="cars.html">Cars</a><a href="contact.html">Contact</a></nav>
         <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm">Book Now</a>
     </div>
@@ -31,34 +33,31 @@
         <div class="lg:col-span-2">
             <!-- Gallery -->
             <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
-                <img id="mainImage" src="https://placehold.co/800x500/EEEEEE/111?text=Car+Image" class="w-full h-96 object-cover">
+                <img id="mainImage" src="" class="w-full h-96 object-cover">
                 <div class="grid grid-cols-4 gap-2 p-4" id="galleryThumbs"></div>
             </div>
 
             <!-- Specs & Description -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
-                <h1 id="carName" class="text-3xl font-bold">BMW X6 2026</h1>
+                <h1 id="carName" class="text-3xl font-bold"></h1>
                 <div class="flex gap-4 mt-2 text-gray-500"><span><i class="fas fa-star text-yellow-400"></i> 4.9 (128 reviews)</span></div>
                 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 py-6 border-y">
-                    <div><i class="fas fa-users text-[#E10600] text-xl"></i><p class="font-bold" id="carSeats">5 Seats</p></div>
-                    <div><i class="fas fa-gas-pump text-[#E10600] text-xl"></i><p class="font-bold" id="carFuel">Petrol</p></div>
-                    <div><i class="fas fa-cog text-[#E10600] text-xl"></i><p class="font-bold" id="carTrans">Automatic</p></div>
+                    <div><i class="fas fa-users text-[#E10600] text-xl"></i><p class="font-bold" id="carSeats"></p></div>
+                    <div><i class="fas fa-gas-pump text-[#E10600] text-xl"></i><p class="font-bold" id="carFuel"></p></div>
+                    <div><i class="fas fa-cog text-[#E10600] text-xl"></i><p class="font-bold" id="carTrans"></p></div>
                     <div><i class="fas fa-road text-[#E10600] text-xl"></i><p class="font-bold">Unlimited KM</p></div>
                 </div>
 
                 <div class="mt-6">
                     <h3 class="font-bold text-xl mb-3">Vehicle Overview</h3>
-                    <p id="carDesc" class="text-gray-600 leading-relaxed">Experience luxury and performance with the all-new 2026 model. Features include panoramic sunroof, premium leather seats, advanced safety systems, and state-of-the-art infotainment. Perfect for business or leisure travel across UAE.</p>
+                    <p id="carDesc" class="text-gray-600 leading-relaxed"></p>
                 </div>
 
                 <div class="mt-6">
                     <h3 class="font-bold text-xl mb-3">Key Features</h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Apple CarPlay</div>
-                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> 360° Camera</div>
-                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Parking Sensors</div>
-                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Blind Spot Monitor</div>
+                    <div class="grid grid-cols-2 gap-3" id="carFeatures">
+                        <!-- features will be filled dynamically -->
                     </div>
                 </div>
             </div>
@@ -74,7 +73,7 @@
         <div class="lg:col-span-1">
             <div class="sticky-box bg-white rounded-2xl p-6 shadow-lg">
                 <p class="text-gray-500 text-sm">Starting from</p>
-                <p class="text-4xl font-bold text-[#E10600]" id="carPrice">AED 550</p>
+                <p class="text-4xl font-bold text-[#E10600]" id="carPrice"></p>
                 <p class="text-sm text-gray-500">per day + full insurance included</p>
 
                 <div class="mt-6">
@@ -82,7 +81,7 @@
                     <input type="number" id="rentalDays" min="1" value="3" class="w-full border rounded-xl p-3 mt-2">
                     <div class="flex justify-between mt-4 p-3 bg-gray-50 rounded-xl">
                         <span class="font-semibold">Total Price:</span>
-                        <span id="totalPrice" class="text-2xl font-bold text-[#E10600]">AED 1650</span>
+                        <span id="totalPrice" class="text-2xl font-bold text-[#E10600]"></span>
                     </div>
                 </div>
 
@@ -99,18 +98,40 @@
     </div>
 </main>
 
+<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental UAE | Drive the Future</footer>
+
 <script>
+    // Complete car database (same as cars.html)
     const carsData = {
-        1: { name:"BMW X6 2026", price:550, seats:5, fuel:"Petrol", trans:"Automatic", desc:"Powerful V8 engine with luxury interior", img:"https://placehold.co/800x500/EEEEEE/111?text=BMW+X6", gallery:["https://placehold.co/800x500/EEEEEE/111?text=BMW+Front","https://placehold.co/800x500/EEEEEE/111?text=BMW+Interior"] },
-        2: { name:"Mercedes EQS", price:750, seats:4, fuel:"Electric", trans:"Automatic", desc:"Fully electric luxury sedan with hyper screen", img:"https://placehold.co/800x500/EEEEEE/111?text=Mercedes+EQS", gallery:[] },
-        3: { name:"Nissan Patrol", price:450, seats:7, fuel:"Petrol", trans:"Automatic", desc:"Off-road capable family SUV", img:"https://placehold.co/800x500/EEEEEE/111?text=Nissan+Patrol", gallery:[] },
-        4: { name:"Porsche Cayenne", price:890, seats:5, fuel:"Premium", trans:"Automatic", desc:"Sporty performance SUV", img:"https://placehold.co/800x500/EEEEEE/111?text=Porsche+Cayenne", gallery:[] }
+        1: { name:"Kia Pegas", price:150, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_pegas.png", desc:"Compact sedan with excellent fuel efficiency, ideal for city driving. Features include air conditioning, power windows, and a smooth automatic transmission.", features:["Bluetooth Connectivity","Rear Parking Sensors","Power Windows","Central Locking"] },
+        2: { name:"Hyundai Accent", price:160, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Hyundai", img:"images/hyundai_accent.png", desc:"Reliable and stylish sedan, perfect for daily commutes. Spacious interior with modern tech and safety features.", features:["Touchscreen Display","Rear Camera","Steering Controls","ABS"] },
+        3: { name:"Toyota Corolla", price:180, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_corolla.png", desc:"World-renowned sedan known for durability and comfort. Great fuel economy and low maintenance.", features:["Toyota Safety Sense","Apple CarPlay","Lane Departure Alert","Pre-Collision System"] },
+        4: { name:"Hyundai Elantra", price:200, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Hyundai", img:"images/hyundai_elantra.png", desc:"Sleek design with a premium interior. Offers a smooth ride and advanced connectivity options.", features:["Wireless Charging","Digital Cluster","Smart Cruise Control","Bose Sound System"] },
+        5: { name:"Kia K5", price:220, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_k5.png", desc:"Sporty mid-size sedan with bold styling. Turbocharged engine option and cutting-edge tech.", features:["Panoramic Sunroof","Heated Seats","LED Lighting","Drive Mode Select"] },
+        6: { name:"Mazda 6", price:250, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Mazda", img:"images/mazda_6.png", desc:"Elegant Japanese sedan with premium materials and responsive handling. A driver's favorite.", features:["Leather Seats","Bose Audio","Heads-Up Display","Adaptive Headlights"] },
+        7: { name:"Toyota Fortuner", price:400, seats:7, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Toyota", img:"images/toyota_fortuner.png", desc:"Rugged 7-seater SUV built for off-road and family adventures. Powerful and spacious.", features:["4x4 Capability","7 Airbags","Rear AC","Touchscreen Navigation"] },
+        8: { name:"Nissan X-Trail", price:350, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Nissan", img:"images/nissan_xtrail.png", desc:"Versatile crossover with flexible seating and advanced safety. Great for urban and light off-road.", features:["ProPILOT Assist","Divide-N-Hide Cargo","Intelligent AWD","Around View Monitor"] },
+        9: { name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta.png", desc:"Compact SUV that blends style and practicality. Loaded with features and comfortable ride.", features:["Panoramic Sunroof","Ventilated Seats","Bose Sound","BlueLink Connected"] },
+        10: { name:"Kia Sportage", price:300, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Kia", img:"images/kia_sportage.png", desc:"Modern compact SUV with striking design. Advanced safety and premium interior.", features:["Dual 12.3-inch Screens","Smart Power Tailgate","Wireless Charging","Highway Driving Assist"] },
+        11: { name:"Nissan Kicks", price:250, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Nissan", img:"images/nissan_kicks.png", desc:"Compact crossover with bold looks and efficient performance. Perfect for city adventures.", features:["360° Camera","Bose Personal Plus Audio","Floating Roof","NissanConnect"] },
+        12: { name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta.png", desc:"Compact SUV that blends style and practicality. Loaded with features and comfortable ride.", features:["Panoramic Sunroof","Ventilated Seats","Bose Sound","BlueLink Connected"] }, // duplicate but kept for completeness
+        13: { name:"Kia K4", price:210, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_k4.png", desc:"New sedan offering a balance of style, comfort, and technology. Ideal for modern drivers.", features:["Large Touchscreen","Digital Cluster","LED Lighting","Smart Key"] },
+        14: { name:"Toyota Camry", price:260, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_camry.png", desc:"Legendary mid-size sedan known for reliability and comfort. Hybrid option available.", features:["Toyota Safety Sense 2.5+","9-inch Screen","Qi Wireless Charging","Panoramic View Monitor"] }
     };
 
+    // Get car ID from URL
     const urlParams = new URLSearchParams(window.location.search);
     const carId = urlParams.get('id') || '1';
-    const car = carsData[carId] || carsData['1'];
+    const car = carsData[carId];
 
+    if (!car) {
+        // Fallback if ID not found
+        document.getElementById('carName').innerText = "Car not found";
+        document.getElementById('mainImage').src = "https://placehold.co/800x500/EEEEEE/111?text=Car+Not+Found";
+        throw new Error("Car not found");
+    }
+
+    // Populate page with car details
     document.getElementById('carName').innerText = car.name;
     document.getElementById('carSeats').innerText = car.seats + ' Seats';
     document.getElementById('carFuel').innerText = car.fuel;
@@ -119,24 +140,64 @@
     document.getElementById('carPrice').innerHTML = `AED ${car.price}`;
     document.getElementById('mainImage').src = car.img;
 
+    // Features list
+    const featuresContainer = document.getElementById('carFeatures');
+    if (car.features && car.features.length) {
+        featuresContainer.innerHTML = car.features.map(f => `<div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> ${f}</div>`).join('');
+    } else {
+        featuresContainer.innerHTML = '<div class="col-span-2 text-gray-500">Standard features included</div>';
+    }
+
+    // Gallery (use main image only for now, you can add more images if available)
+    const galleryThumbs = document.getElementById('galleryThumbs');
+    // For simplicity, just show main image as the only thumb (no multiple images)
+    galleryThumbs.innerHTML = `<img src="${car.img}" class="gallery-thumb w-full h-20 rounded-lg object-cover border-2 border-[#E10600]" onclick="document.getElementById('mainImage').src='${car.img}'">`;
+    // If you have additional images (e.g., car_gallery1.png), you could add them here.
+
+    // Price calculator
     const daysInput = document.getElementById('rentalDays');
     const totalSpan = document.getElementById('totalPrice');
-    function updateTotal() { let days = parseInt(daysInput.value) || 1; totalSpan.innerText = `AED ${car.price * days}`; }
+    function updateTotal() {
+        let days = parseInt(daysInput.value) || 1;
+        totalSpan.innerText = `AED ${car.price * days}`;
+    }
     daysInput.addEventListener('input', updateTotal);
     updateTotal();
 
+    // Book now link
     document.getElementById('bookNowBtn').href = `booking.html?car=${carId}&days=${daysInput.value}`;
-    window.whatsappBook = () => { window.open(`https://wa.me/971503666260?text=I want to book ${car.name} for ${daysInput.value} days. Total AED ${car.price * daysInput.value}. Please confirm availability.`, '_blank'); };
 
-    // Recommended cars
-    const recs = Object.entries(carsData).filter(([id]) => id !== carId).slice(0,2);
-    document.getElementById('recommendedCars').innerHTML = recs.map(([id, c]) => `
-        <a href="car-details.html?id=${id}" class="bg-white rounded-xl p-3 flex gap-3 hover:shadow-md transition">
-            <img src="${c.img}" class="w-20 h-20 rounded-lg object-cover"><div><p class="font-bold">${c.name}</p><p class="text-[#E10600] font-bold">AED ${c.price}/day</p></div>
+    // WhatsApp booking
+    window.whatsappBook = () => {
+        const days = parseInt(daysInput.value) || 1;
+        window.open(`https://wa.me/971503666260?text=I want to book ${car.name} for ${days} days. Total AED ${car.price * days}. Please confirm availability.`, '_blank');
+    };
+
+    // Recommended cars: pick 2 cars of same type or brand, excluding current car
+    let recommendations = Object.values(carsData).filter(c => c.id != carId);
+    // Prioritize same type, then same brand
+    const sameType = recommendations.filter(c => c.type === car.type);
+    const sameBrand = recommendations.filter(c => c.brand === car.brand);
+    let recs = [];
+    if (sameType.length >= 2) {
+        recs = sameType.slice(0,2);
+    } else if (sameBrand.length >= 2) {
+        recs = sameBrand.slice(0,2);
+    } else {
+        recs = recommendations.slice(0,2);
+    }
+
+    const recContainer = document.getElementById('recommendedCars');
+    recContainer.innerHTML = recs.map(c => `
+        <a href="car-details.html?id=${c.id}" class="bg-white rounded-xl p-3 flex gap-3 hover:shadow-md transition">
+            <img src="${c.img}" class="w-20 h-20 rounded-lg object-cover" onerror="this.src='https://placehold.co/400x240/EEEEEE/111?text=${c.name.replace(/ /g, '+')}'">
+            <div>
+                <p class="font-bold">${c.name}</p>
+                <p class="text-[#E10600] font-bold">AED ${c.price}/day</p>
+                <p class="text-xs text-gray-500">${c.type}</p>
+            </div>
         </a>
     `).join('');
 </script>
-
-<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental UAE | Drive the Future</footer>
 </body>
 </html>
