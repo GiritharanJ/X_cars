@@ -24,6 +24,29 @@
         input, select { border: 1px solid #E0E0E0; border-radius: 16px; padding: 12px 16px; outline: none; transition: all 0.2s; background: white; }
         input:focus, select:focus { border-color: #E10600; box-shadow: 0 0 0 3px rgba(225,6,0,0.1); }
         .offer-badge { background: linear-gradient(135deg, #E10600 0%, #ff4d2e 100%); }
+        .slider {
+  display: flex;
+  width: 500%; /* 5 slides */
+  animation: slide 25s infinite;
+}
+
+.slide {
+  flex: 1 0 100%;
+}
+
+@keyframes slide {
+  0% { transform: translateX(0%); }
+  20% { transform: translateX(0%); }
+  25% { transform: translateX(-100%); }
+  40% { transform: translateX(-100%); }
+  45% { transform: translateX(-200%); }
+  60% { transform: translateX(-200%); }
+  65% { transform: translateX(-300%); }
+  80% { transform: translateX(-300%); }
+  85% { transform: translateX(-400%); }
+  100% { transform: translateX(-400%); }
+}
+
     </style>
 </head>
 <body>
