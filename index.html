@@ -26,7 +26,7 @@
         .offer-badge { background: linear-gradient(135deg, #E10600 0%, #ff4d2e 100%); }
         .slider {
   display: flex;
-  width: 500%; /* 5 slides */
+  width: 600%; /* 6 slides */
   animation: slide 25s infinite;
 }
 
@@ -66,28 +66,31 @@
 </a>
 
 <!-- Header -->
-<header class="bg-white shadow-sm sticky top-0 z-50">
+<header class="sticky top-0 z-50 backdrop-blur-md bg-white/05 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
         <div class="flex items-center gap-2">
             <i class="fas fa-car text-[#E10600] text-2xl"></i>
-            <span class="font-extrabold text-2xl tracking-tight">X CARS <span class="text-[#E10600]">RENTAL</span></span>
+           <img src="images/xcarlogo.jpeg" class="h-10" alt="logo">
         </div>
         <nav class="hidden md:flex gap-8 font-semibold">
             <a href="index.html" class="text-[#E10600]">Home</a>
             <a href="cars.html" class="hover:text-[#E10600] transition">Cars</a>
             <a href="contact.html" class="hover:text-[#E10600] transition">Contact</a>
         </nav>
-        <div class="flex gap-3">
-            <a href="tel:+971503666260" class="text-sm bg-gray-100 px-4 py-2 rounded-full hover:bg-gray-200 transition"><i class="fas fa-phone-alt"></i> Call</a>
-            <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm btn-glow">Book Now</a>
-        </div>
+       <div class="flex items-center gap-3">
+    <a href="tel:+971503666260" class="bg-black text-white px-4 py-2 rounded-full text-sm hover:bg-[#E10600] transition">
+        <i class="fas fa-phone"></i></a>
+    <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm btn-glow">
+        Book Now
+    </a>
+           <a href="https://www.tiktok.com/@x.cars.rental" class="text-xl hover:text-[#E10600]"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.instagram.com/x.cars.rental_uq" class="text-xl hover:text-[#E10600]"><i class="fab fa-tiktok"></i></a>
+</div>
     </div>
 </header>
-
-
-<main class="max-w-7xl mx-auto px-5 md:px-8 py-8 space-y-20">
+   
     <!-- Hero Section -->
-    <main class="max-w-7xl mx-auto px-5 md:px-8 py-8 space-y-20">
+    <section class="relative w-full h-screen overflow-hidden">
     <!-- Hero Section -->
     <div class="relative flex flex-col md:flex-row items-center gap-12 fade-up overflow-hidden">
         <!-- Background Slider -->
@@ -103,21 +106,27 @@
         </div>
 
         <!-- Overlay content -->
-        <div class="relative z-10 flex-1 space-y-6 bg-white/3 p-6 rounded-xl">
-            <div class="inline-block bg-red-100 text-[#E10600] px-4 py-1 rounded-full text-sm font-semibold">✨ EXCLUSIVE OFFERS</div>
-            <h1 class="text-5xl md:text-6xl font-extrabold text-[#111111] leading-tight">
-                Drive <span class="text-[#E10600]">2026 Models</span><br>and Pay Less!
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 bg-black/40"></div>
+
+    <div class="relative z-10 h-full flex items-center px-10">
+        <div class="max-w-xl space-y-6">
+
+            <h1 class="text-6xl font-extrabold text-white">
+                Rent <span class="text-[#E10600]">Luxury Cars</span> in UAE
             </h1>
-            <p class="text-[#666666] text-lg leading-relaxed">
-                Save up to two days FREE when renting now. Full insurance, brand-new cars, and fast pickup procedures across UAE.
+
+            <p class="text-white text-lg">
+                Drive 2026 Models and Pay Less! Save up to two days FREE when renting now. Full insurance, brand-new cars, and fast pickup procedures across UAE.
             </p>
-            <div class="flex flex-wrap gap-4 pt-4">
-                <a href="cars.html" class="bg-[#E10600] text-white px-8 py-3 rounded-full font-bold text-lg shadow-md btn-glow transition">🔴 Book Now</a>
-                <a href="cars.html" class="border-2 border-gray-300 px-8 py-3 rounded-full font-semibold hover:border-[#E10600] hover:text-[#E10600] transition">⚪ View Cars</a>
+
+            <div class="flex gap-4">
+                <a href="#" class="bg-[#E10600] px-8 py-3 text-white rounded-full">Book Now</a>
+                <a href="#" class="border border-white px-8 py-3 text-white rounded-full">View Cars</a>
             </div>
         </div>
     </div>
-</main>
+    </section>
 
 
     <!-- Smart Search Bar -->
