@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="X Cars Rental UAE - Rent latest 2026 models with exclusive offers. Save up to 2 days free, full insurance coverage.">
+    <meta name="keywords" content="car rental UAE, rent a car Dubai, X Cars, luxury car rental">
+    <title>X Cars Rental | Exclusive Offers on Latest 2026 Models in UAE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: #F5F5F7; }
+        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); }
+        .btn-glow:hover { box-shadow: 0 0 15px #E10600; transform: scale(1.02); transition: all 0.2s; }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; background: #25D366; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 1000; cursor: pointer; transition: all 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); background: #20b859; }
+        .sticky-mobile-cta { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); z-index: 999; display: none; border-top: 1px solid #E0E0E0; }
+        @media (max-width: 768px) { .sticky-mobile-cta { display: flex; } }
+        input, select { border: 1px solid #E0E0E0; border-radius: 16px; padding: 12px 16px; outline: none; transition: all 0.2s; background: white; }
+        input:focus, select:focus { border-color: #E10600; box-shadow: 0 0 0 3px rgba(225,6,0,0.1); }
+        .offer-badge { background: linear-gradient(135deg, #E10600 0%, #ff4d2e 100%); }
+    </style>
+</head>
+<body>
+
+<!-- Sticky Mobile CTA -->
+<div class="sticky-mobile-cta justify-between items-center p-4">
+    <div>
+        <p class="font-bold text-sm">🔥 Limited Time Offer</p>
+        <p class="text-xs text-gray-600">Save up to 2 days FREE</p>
+    </div>
+    <a href="booking.html" class="bg-[#E10600] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-lg">Book Now →</a>
+</div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/971503666260?text=Hello%20X%20Cars%2C%20I'm%20interested%20in%20renting%20a%20car!" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp text-white text-3xl"></i>
+</a>
+
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-car text-[#E10600] text-2xl"></i>
+            <span class="font-extrabold text-2xl tracking-tight">X CARS <span class="text-[#E10600]">RENTAL</span></span>
+        </div>
+        <nav class="hidden md:flex gap-8 font-semibold">
+            <a href="index.html" class="text-[#E10600]">Home</a>
+            <a href="cars.html" class="hover:text-[#E10600] transition">Cars</a>
+            <a href="contact.html" class="hover:text-[#E10600] transition">Contact</a>
+        </nav>
+        <div class="flex gap-3">
+            <a href="tel:+971503666260" class="text-sm bg-gray-100 px-4 py-2 rounded-full hover:bg-gray-200 transition"><i class="fas fa-phone-alt"></i> Call</a>
+            <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm btn-glow">Book Now</a>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-5 md:px-8 py-8 space-y-20">
+    <!-- Hero Section -->
+    <div class="flex flex-col md:flex-row items-center gap-12 fade-up">
+        <div class="flex-1 space-y-6">
+            <div class="inline-block bg-red-100 text-[#E10600] px-4 py-1 rounded-full text-sm font-semibold">✨ EXCLUSIVE OFFERS</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-[#111111] leading-tight">Drive <span class="text-[#E10600]">2026 Models</span><br>and Pay Less!</h1>
+            <p class="text-[#666666] text-lg leading-relaxed">Save up to two days FREE when renting now. Full insurance, brand-new cars, and fast pickup procedures across UAE.</p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a href="cars.html" class="bg-[#E10600] text-white px-8 py-3 rounded-full font-bold text-lg shadow-md btn-glow transition">🔴 Book Now</a>
+                <a href="cars.html" class="border-2 border-gray-300 px-8 py-3 rounded-full font-semibold hover:border-[#E10600] hover:text-[#E10600] transition">⚪ View Cars</a>
+            </div>
+        </div>
+        <div class="flex-1 relative">
+            <img src="https://placehold.co/600x450/F5F5F7/111?text=2026+Luxury+SUV" alt="2026 Luxury Car" class="rounded-3xl shadow-2xl w-full object-cover">
+            <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-lg hidden md:block">
+                <div class="flex gap-2"><i class="fas fa-star text-yellow-400"></i><span class="font-bold">4.9/5</span><span class="text-gray-500">(1,200+ reviews)</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Smart Search Bar -->
+    <div class="bg-white rounded-2xl shadow-xl p-6 fade-up">
+        <h3 class="font-bold text-xl mb-4">🔍 Find Your Perfect Car</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <select class="w-full">
+                <option>📍 Pickup Location</option>
+                <option>Dubai Marina</option>
+                <option>Downtown Dubai</option>
+                <option>Abu Dhabi</option>
+                <option>Sharjah</option>
+            </select>
+            <input type="date" class="w-full" value="2025-01-20">
+            <input type="date" class="w-full" value="2025-01-25">
+            <select class="w-full">
+                <option>All Car Types</option>
+                <option>SUV</option>
+                <option>Sedan</option>
+                <option>Sports Car</option>
+                <option>Luxury</option>
+            </select>
+            <button class="bg-[#E10600] text-white font-bold rounded-full py-3 md:col-span-1 hover:bg-red-700 transition">Search Cars →</button>
+        </div>
+    </div>
+
+    <!-- Featured Cars -->
+    <div class="fade-up">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-[#111111]">🔥 Featured Latest Models</h2>
+            <a href="cars.html" class="text-[#E10600] font-semibold hover:underline">View All 20+ Cars →</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Car Card 1 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover">
+                <img src="https://placehold.co/400x240/EEEEEE/111?text=BMW+X6+2026" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="font-bold text-xl">BMW X6 2026</h3>
+                    <p class="text-[#E10600] font-bold text-2xl mt-1">AED 550<span class="text-sm text-gray-500">/day</span></p>
+                    <div class="flex gap-3 text-sm text-gray-500 mt-2 pb-3 border-b">
+                        <span><i class="fas fa-users"></i> 5 seats</span>
+                        <span><i class="fas fa-gas-pump"></i> Petrol</span>
+                        <span><i class="fas fa-cog"></i> Auto</span>
+                    </div>
+                    <a href="car-details.html?id=1" class="mt-4 inline-block bg-black text-white w-full text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#E10600] transition">Book Now →</a>
+                </div>
+            </div>
+            <!-- Car Card 2 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover">
+                <img src="https://placehold.co/400x240/EEEEEE/111?text=Mercedes+EQS" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="font-bold text-xl">Mercedes EQS</h3>
+                    <p class="text-[#E10600] font-bold text-2xl mt-1">AED 750<span class="text-sm text-gray-500">/day</span></p>
+                    <div class="flex gap-3 text-sm text-gray-500 mt-2 pb-3 border-b">
+                        <span><i class="fas fa-users"></i> 4 seats</span>
+                        <span><i class="fas fa-charging-station"></i> Electric</span>
+                        <span><i class="fas fa-cog"></i> Auto</span>
+                    </div>
+                    <a href="car-details.html?id=2" class="mt-4 inline-block bg-black text-white w-full text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#E10600] transition">Book Now →</a>
+                </div>
+            </div>
+            <!-- Car Card 3 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover">
+                <img src="https://placehold.co/400x240/EEEEEE/111?text=Nissan+Patrol" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="font-bold text-xl">Nissan Patrol</h3>
+                    <p class="text-[#E10600] font-bold text-2xl mt-1">AED 450<span class="text-sm text-gray-500">/day</span></p>
+                    <div class="flex gap-3 text-sm text-gray-500 mt-2 pb-3 border-b">
+                        <span><i class="fas fa-users"></i> 7 seats</span>
+                        <span><i class="fas fa-gas-pump"></i> Petrol</span>
+                        <span><i class="fas fa-cog"></i> Auto</span>
+                    </div>
+                    <a href="car-details.html?id=3" class="mt-4 inline-block bg-black text-white w-full text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#E10600] transition">Book Now →</a>
+                </div>
+            </div>
+            <!-- Car Card 4 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover">
+                <img src="https://placehold.co/400x240/EEEEEE/111?text=Porsche+Cayenne" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="font-bold text-xl">Porsche Cayenne</h3>
+                    <p class="text-[#E10600] font-bold text-2xl mt-1">AED 890<span class="text-sm text-gray-500">/day</span></p>
+                    <div class="flex gap-3 text-sm text-gray-500 mt-2 pb-3 border-b">
+                        <span><i class="fas fa-users"></i> 5 seats</span>
+                        <span><i class="fas fa-gas-pump"></i> Premium</span>
+                        <span><i class="fas fa-cog"></i> Auto</span>
+                    </div>
+                    <a href="car-details.html?id=4" class="mt-4 inline-block bg-black text-white w-full text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#E10600] transition">Book Now →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offers Section -->
+    <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-8 md:p-10 flex flex-col md:flex-row justify-between items-center gap-6 fade-up">
+        <div class="text-center md:text-left">
+            <span class="offer-badge text-white px-4 py-1.5 rounded-full text-sm font-semibold inline-block">🎁 LIMITED TIME</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Save Up to 2 Days FREE</h2>
+            <p class="text-gray-600 text-lg mt-2">RENT 3 DAYS = 1 DAY FREE | RENT 1 WEEK = 2 DAYS FREE</p>
+            <div class="flex gap-3 mt-4 justify-center md:justify-start">
+                <span class="bg-white px-4 py-2 rounded-full text-sm font-semibold">🚗 5% OFF Weekend Deals</span>
+                <span class="bg-white px-4 py-2 rounded-full text-sm font-semibold">🎯 Full Insurance Included</span>
+            </div>
+        </div>
+        <a href="booking.html" class="bg-[#E10600] text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:scale-105 transition whitespace-nowrap">Claim Offer →</a>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="fade-up">
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose <span class="text-[#E10600]">X Cars</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm text-center hover:shadow-lg transition">
+                <div class="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-bolt text-3xl text-[#E10600]"></i></div>
+                <h3 class="font-bold text-xl">Fast Booking</h3>
+                <p class="text-gray-500 mt-2">Instant confirmation, digital contracts, and 5-minute pickup process</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm text-center hover:shadow-lg transition">
+                <div class="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-tag text-3xl text-[#E10600]"></i></div>
+                <h3 class="font-bold text-xl">Best Price Guarantee</h3>
+                <p class="text-gray-500 mt-2">No hidden fees, cheapest rates in UAE with exclusive online deals</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm text-center hover:shadow-lg transition">
+                <div class="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-headset text-3xl text-[#E10600]"></i></div>
+                <h3 class="font-bold text-xl">24/7 Support</h3>
+                <p class="text-gray-500 mt-2">WhatsApp, phone & email support round the clock for your peace of mind</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="fade-up">
+        <h2 class="text-3xl font-bold text-center mb-12">⭐ What Our Customers Say</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm">
+                <div class="flex gap-1 text-yellow-400 mb-3">★★★★★</div>
+                <p class="italic text-gray-600">"Amazing service! Got the brand new BMW X6 2026, car was spotless. Fast pickup in Dubai Marina. Highly recommend!"</p>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center"><i class="fas fa-user"></i></div>
+                    <div><p class="font-bold">Ahmed Al Mansouri</p><p class="text-xs text-gray-500">Rented BMW X6</p></div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm">
+                <div class="flex gap-1 text-yellow-400 mb-3">★★★★★</div>
+                <p class="italic text-gray-600">"Best car rental in UAE! Used WhatsApp booking, they delivered the Mercedes EQS to my hotel. Very professional team."</p>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center"><i class="fas fa-user"></i></div>
+                    <div><p class="font-bold">Sarah Johnson</p><p class="text-xs text-gray-500">Rented Mercedes EQS</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-[#111111] text-white mt-20 py-12">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="grid md:grid-cols-4 gap-8">
+            <div><i class="fas fa-car text-[#E10600] text-2xl"></i><p class="mt-2 font-bold">X CARS RENTAL</p><p class="text-gray-400 text-sm">Premium car rental services across UAE since 2020</p></div>
+            <div><h4 class="font-bold mb-3">Quick Links</h4><ul class="space-y-2 text-gray-400"><li><a href="index.html" class="hover:text-white">Home</a></li><li><a href="cars.html" class="hover:text-white">Our Fleet</a></li><li><a href="contact.html" class="hover:text-white">Contact</a></li></ul></div>
+            <div><h4 class="font-bold mb-3">Contact</h4><ul class="space-y-2 text-gray-400"><li><i class="fas fa-phone-alt"></i> +971 50 366 6260</li><li><i class="fab fa-whatsapp"></i> WhatsApp Available</li><li><i class="fas fa-envelope"></i> info@xcars.ae</li></ul></div>
+            <div><h4 class="font-bold mb-3">Follow Us</h4><div class="flex gap-4 text-2xl"><i class="fab fa-instagram cursor-pointer hover:text-[#E10600]"></i><i class="fab fa-facebook cursor-pointer hover:text-[#E10600]"></i><i class="fab fa-google cursor-pointer hover:text-[#E10600]"></i></div></div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance | Fast Pickup</div>
+    </div>
+</footer>
+
+<script>
+    // Fade-up animation on scroll
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
