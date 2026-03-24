@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Car | X Cars Rental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#F5F5F7]">
+
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2"><i class="fas fa-car text-[#E10600] text-2xl"></i><span class="font-extrabold text-2xl">X CARS <span class="text-[#E10600]">RENTAL</span></span></div>
+        <nav class="hidden md:flex gap-8 font-semibold"><a href="index.html">Home</a><a href="cars.html">Cars</a><a href="contact.html">Contact</a></nav>
+    </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 md:px-8 py-12">
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div class="bg-[#E10600] px-8 py-6"><h1 class="text-3xl font-bold text-white">Complete Your Booking</h1><p class="text-white/80">Fill in the details to reserve your dream car</p></div>
+        
+        <div class="p-8">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Form -->
+                <div>
+                    <form id="bookingForm" class="space-y-5">
+                        <div><label class="font-semibold block mb-2">Full Name *</label><input type="text" id="fullName" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></div>
+                        <div><label class="font-semibold block mb-2">Phone Number *</label><input type="tel" id="phone" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></div>
+                        <div><label class="font-semibold block mb-2">Email Address</label><input type="email" id="email" class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></div>
+                        <div class="grid grid-cols-2 gap-3"><div><label class="font-semibold block mb-2">Pickup Date</label><input type="date" id="pickupDate" class="w-full border rounded-xl p-3"></div><div><label class="font-semibold block mb-2">Return Date</label><input type="date" id="returnDate" class="w-full border rounded-xl p-3"></div></div>
+                        <div><label class="font-semibold block mb-2">Pickup Location</label><select id="location" class="w-full border rounded-xl p-3"><option>Dubai Marina</option><option>Downtown Dubai</option><option>Abu Dhabi</option></select></div>
+                        <button type="submit" class="w-full bg-[#E10600] text-white py-3 rounded-full font-bold text-lg hover:bg-red-700 transition">Confirm Booking →</button>
+                        <button type="button" onclick="whatsappBooking()" class="w-full bg-green-600 text-white py-3 rounded-full font-bold text-lg mt-3"><i class="fab fa-whatsapp"></i> Book via WhatsApp</button>
+                    </form>
+                </div>
+
+                <!-- Booking Summary with Dynamic Price Calculator -->
+                <div class="bg-gray-50 rounded-2xl p-6">
+                    <h3 class="font-bold text-xl mb-4">Booking Summary</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between"><span class="text-gray-600">Selected Car:</span><span id="summaryCar" class="font-semibold">BMW X6 2026</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600">Daily Rate:</span><span id="summaryRate" class="font-semibold">AED 550</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600">Rental Days:</span><span id="summaryDays" class="font-semibold">3 days</span></div>
+                        <div class="border-t pt-3 mt-3"><div class="flex justify-between text-lg"><span class="font-bold">Total Amount:</span><span id="summaryTotal" class="font-bold text-2xl text-[#E10600]">AED 1650</span></div></div>
+                        <div class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Full insurance coverage included<br><i class="fas fa-clock"></i> Free cancellation 24h before pickup</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const carId = urlParams.get('car') || '1';
+    const preDays = urlParams.get('days') || '3';
+    
+    const cars = { 1:{name:"BMW X6 2026", price:550}, 2:{name:"Mercedes EQS", price:750}, 3:{name:"Nissan Patrol", price:450}, 4:{name:"Porsche Cayenne", price:890} };
+    const selectedCar = cars[carId] || cars[1];
+    
+    document.getElementById('summaryCar').innerText = selectedCar.name;
+    document.getElementById('summaryRate').innerText = `AED ${selectedCar.price}`;
+    
+    const pickupDate = document.getElementById('pickupDate');
+    const returnDate = document.getElementById('returnDate');
+    const summaryDays = document.getElementById('summaryDays');
+    const summaryTotal = document.getElementById('summaryTotal');
+    
+    function calculateDays() {
+        if(pickupDate.value && returnDate.value) {
+            const start = new Date(pickupDate.value);
+            const end = new Date(returnDate.value);
+            const days = Math.ceil((end - start) / (1000 * 3600 * 24));
+            if(days > 0) {
+                summaryDays.innerText = `${days} days`;
+                summaryTotal.innerText = `AED ${selectedCar.price * days}`;
+                return days;
+            }
+        }
+        summaryDays.innerText = `${preDays} days`;
+        summaryTotal.innerText = `AED ${selectedCar.price * preDays}`;
+        return preDays;
+    }
+    
+    pickupDate.addEventListener('change', calculateDays);
+    returnDate.addEventListener('change', calculateDays);
+    calculateDays();
+    
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('fullName').value;
+        if(!name) { alert('Please enter your name'); return; }
+        alert(`✅ Thank you ${name}! Your booking for ${selectedCar.name} has been received. We'll contact you shortly via WhatsApp.`);
+    });
+    
+    window.whatsappBooking = () => {
+        const name = document.getElementById('fullName').value || 'Guest';
+        const days = calculateDays();
+        window.open(`https://wa.me/971503666260?text=Booking Request:%0AName: ${name}%0ACar: ${selectedCar.name}%0ADays: ${days}%0ATotal: AED ${selectedCar.price * days}%0APlease confirm availability.`, '_blank');
+    };
+</script>
+
+<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental | Book with Confidence</footer>
+</body>
+</html>
