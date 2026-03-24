@@ -66,17 +66,53 @@
 </a>
 
 <!-- Header -->
-<header class="sticky top-0 z-50 backdrop-blur-md bg-white/05 border-b border-gray-200">
+<header class="flex top-0 z-50 backdrop-blur-md bg-white/05 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <i class="fas fa-car text-[#E10600] text-2xl"></i>
-           <img src="images/xcarlogo.jpeg" class="h-10" alt="logo">
+           <img src="images/xcarlogo.jpeg" class="h-20" alt="logo">
         </div>
         <nav class="hidden md:flex gap-8 font-semibold">
             <a href="index.html" class="text-[#E10600]">Home</a>
             <a href="cars.html" class="hover:text-[#E10600] transition">Cars</a>
             <a href="contact.html" class="hover:text-[#E10600] transition">Contact</a>
         </nav>
+        <!-- Language & Currency -->
+<div class="relative flex items-center gap-3">
+
+    <!-- Language -->
+    <div class="relative">
+        <button onclick="toggleDropdown('langMenu')" class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border hover:border-[#E10600]">
+            🌐 English
+        </button>
+
+        <div id="langMenu" class="hidden absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl overflow-hidden z-50">
+            <ul class="text-sm">
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇬🇧 English</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 العربية</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇫🇷 Français</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇩🇪 Deutsch</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇪🇸 Español</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇨🇳 中文</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Currency -->
+    <div class="relative">
+        <button onclick="toggleDropdown('currencyMenu')" class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border hover:border-[#E10600]">
+            💲 USD
+        </button>
+
+        <div id="currencyMenu" class="hidden absolute right-0 mt-2 w-40 bg-white shadow-xl rounded-xl overflow-hidden z-50">
+            <ul class="text-sm">
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 AED</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇪🇺 EUR</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇺🇸 USD</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
        <div class="flex items-center gap-3">
     <a href="tel:+971503666260" class="bg-black text-white px-4 py-2 rounded-full text-sm hover:bg-[#E10600] transition">
         <i class="fas fa-phone"></i></a>
@@ -290,7 +326,19 @@
         <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance | Fast Pickup</div>
     </div>
 </footer>
+<script>
+function toggleDropdown(id) {
+    document.getElementById(id).classList.toggle("hidden");
+}
 
+// Close when clicking outside
+window.addEventListener("click", function(e) {
+    if (!e.target.closest(".relative")) {
+        document.getElementById("langMenu").classList.add("hidden");
+        document.getElementById("currencyMenu").classList.add("hidden");
+    }
+});
+</script>
 <script>
     // Fade-up animation on scroll
     const fadeElements = document.querySelectorAll('.fade-up');
