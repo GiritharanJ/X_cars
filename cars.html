@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Fleet | X Cars Rental - Latest 2026 Models in UAE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #F5F5F7; }
+        .car-card { transition: all 0.3s ease; }
+        .car-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15); }
+        .filter-sidebar { position: sticky; top: 100px; }
+        .price-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #E0E0E0; border-radius: 5px; outline: none; }
+        .price-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #E10600; border-radius: 50%; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<!-- Header (same as index) -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2"><i class="fas fa-car text-[#E10600] text-2xl"></i><span class="font-extrabold text-2xl">X CARS <span class="text-[#E10600]">RENTAL</span></span></div>
+        <nav class="hidden md:flex gap-8 font-semibold"><a href="index.html">Home</a><a href="cars.html" class="text-[#E10600]">Cars</a><a href="contact.html">Contact</a></nav>
+        <div class="flex gap-3"><a href="tel:+971503666260" class="text-sm bg-gray-100 px-4 py-2 rounded-full"><i class="fas fa-phone-alt"></i> Call</a><a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm">Book Now</a></div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-5 md:px-8 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <div class="lg:w-80 filter-sidebar">
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="font-bold text-xl mb-4">🔍 Filter Cars</h3>
+                
+                <div class="mb-6">
+                    <label class="font-semibold text-sm mb-2 block">Price Range (AED/day)</label>
+                    <input type="range" id="priceRange" min="300" max="1200" value="1200" class="price-slider">
+                    <div class="flex justify-between mt-2"><span>AED 300</span><span id="priceValue" class="text-[#E10600] font-bold">Up to AED 1200</span></div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="font-semibold text-sm mb-2 block">Car Brand</label>
+                    <select id="brandFilter" class="w-full border rounded-xl p-2">
+                        <option value="all">All Brands</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Mercedes">Mercedes</option>
+                        <option value="Nissan">Nissan</option>
+                        <option value="Porsche">Porsche</option>
+                        <option value="Tesla">Tesla</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="font-semibold text-sm mb-2 block">Car Type</label>
+                    <select id="typeFilter" class="w-full border rounded-xl p-2">
+                        <option value="all">All Types</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="Sports">Sports Car</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="font-semibold text-sm mb-2 block">Fuel Type</label>
+                    <select id="fuelFilter" class="w-full border rounded-xl p-2">
+                        <option value="all">All</option>
+                        <option value="Petrol">Petrol</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
+
+                <button id="resetFilters" class="w-full bg-gray-100 py-2 rounded-full font-semibold hover:bg-gray-200 transition">Reset Filters</button>
+            </div>
+
+            <!-- Compare Section -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
+                <h3 class="font-bold text-lg mb-3"><i class="fas fa-chart-simple text-[#E10600]"></i> Car Compare</h3>
+                <div id="compareList" class="text-sm text-gray-600 mb-3">No cars selected</div>
+                <button id="compareBtn" class="w-full bg-black text-white py-2 rounded-full text-sm font-semibold">Compare Selected (Max 2)</button>
+            </div>
+        </div>
+
+        <!-- Cars Grid -->
+        <div class="flex-1">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold">Our Premium Fleet</h1>
+                <p class="text-gray-500"><span id="carCount">8</span> cars available</p>
+            </div>
+            <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const cars = [
+        { id:1, name:"BMW X6 2026", price:550, seats:5, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"BMW", img:"https://placehold.co/400x240/EEEEEE/111?text=BMW+X6+2026" },
+        { id:2, name:"Mercedes EQS", price:750, seats:4, fuel:"Electric", transmission:"Auto", type:"Sedan", brand:"Mercedes", img:"https://placehold.co/400x240/EEEEEE/111?text=Mercedes+EQS" },
+        { id:3, name:"Nissan Patrol", price:450, seats:7, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Nissan", img:"https://placehold.co/400x240/EEEEEE/111?text=Nissan+Patrol" },
+        { id:4, name:"Porsche Cayenne", price:890, seats:5, fuel:"Premium", transmission:"Auto", type:"SUV", brand:"Porsche", img:"https://placehold.co/400x240/EEEEEE/111?text=Porsche+Cayenne" },
+        { id:5, name:"Tesla Model 3", price:520, seats:5, fuel:"Electric", transmission:"Auto", type:"Sedan", brand:"Tesla", img:"https://placehold.co/400x240/EEEEEE/111?text=Tesla+Model+3" },
+        { id:6, name:"Range Rover Sport", price:950, seats:5, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Range Rover", img:"https://placehold.co/400x240/EEEEEE/111?text=Range+Rover" },
+        { id:7, name:"Audi RS7", price:820, seats:4, fuel:"Premium", transmission:"Auto", type:"Sports", brand:"Audi", img:"https://placehold.co/400x240/EEEEEE/111?text=Audi+RS7" },
+        { id:8, name:"Lexus LX570", price:680, seats:7, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Lexus", img:"https://placehold.co/400x240/EEEEEE/111?text=Lexus+LX570" }
+    ];
+
+    let compareCars = [];
+
+    function renderCars() {
+        let maxPrice = parseInt(document.getElementById('priceRange').value);
+        let brand = document.getElementById('brandFilter').value;
+        let type = document.getElementById('typeFilter').value;
+        let fuel = document.getElementById('fuelFilter').value;
+
+        let filtered = cars.filter(car => {
+            if(car.price > maxPrice) return false;
+            if(brand !== 'all' && !car.name.includes(brand)) return false;
+            if(type !== 'all' && car.type !== type) return false;
+            if(fuel !== 'all' && car.fuel !== fuel) return false;
+            return true;
+        });
+
+        document.getElementById('carCount').innerText = filtered.length;
+        const grid = document.getElementById('carsGrid');
+        grid.innerHTML = filtered.map(car => `
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md car-card">
+                <img src="${car.img}" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-bold text-xl">${car.name}</h3>
+                        <button onclick="toggleCompare(${car.id})" class="compare-btn text-xs ${compareCars.includes(car.id) ? 'bg-[#E10600] text-white' : 'bg-gray-200'} px-3 py-1 rounded-full transition">Compare</button>
+                    </div>
+                    <p class="text-[#E10600] font-bold text-2xl mt-1">AED ${car.price}<span class="text-sm text-gray-500">/day</span></p>
+                    <div class="flex gap-4 text-sm text-gray-500 mt-2 pb-3 border-b">
+                        <span><i class="fas fa-users"></i> ${car.seats} seats</span>
+                        <span><i class="fas fa-gas-pump"></i> ${car.fuel}</span>
+                        <span><i class="fas fa-cog"></i> ${car.transmission}</span>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <a href="car-details.html?id=${car.id}" class="flex-1 bg-black text-white text-center py-2 rounded-full text-sm font-semibold hover:bg-[#E10600] transition">View Details</a>
+                        <a href="booking.html?car=${car.id}" class="flex-1 border-2 border-[#E10600] text-[#E10600] text-center py-2 rounded-full text-sm font-semibold hover:bg-[#E10600] hover:text-white transition">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.toggleCompare = function(carId) {
+        let index = compareCars.indexOf(carId);
+        if(index === -1 && compareCars.length < 2) {
+            compareCars.push(carId);
+        } else if(index !== -1) {
+            compareCars.splice(index, 1);
+        } else if(compareCars.length >= 2) {
+            alert('You can compare only 2 cars at a time');
+        }
+        updateCompareUI();
+        renderCars();
+    };
+
+    function updateCompareUI() {
+        let compareNames = compareCars.map(id => cars.find(c => c.id === id)?.name).filter(Boolean);
+        document.getElementById('compareList').innerHTML = compareNames.length ? compareNames.join(' vs ') : 'No cars selected';
+    }
+
+    document.getElementById('compareBtn').onclick = () => {
+        if(compareCars.length === 2) {
+            let car1 = cars.find(c => c.id === compareCars[0]);
+            let car2 = cars.find(c => c.id === compareCars[1]);
+            alert(`COMPARE:\n${car1.name} - AED ${car1.price}/day, ${car1.seats} seats, ${car1.fuel}\nVS\n${car2.name} - AED ${car2.price}/day, ${car2.seats} seats, ${car2.fuel}`);
+        } else {
+            alert('Please select exactly 2 cars to compare');
+        }
+    };
+
+    document.getElementById('priceRange').oninput = (e) => {
+        document.getElementById('priceValue').innerText = `Up to AED ${e.target.value}`;
+        renderCars();
+    };
+    document.getElementById('brandFilter').onchange = () => renderCars();
+    document.getElementById('typeFilter').onchange = () => renderCars();
+    document.getElementById('fuelFilter').onchange = () => renderCars();
+    document.getElementById('resetFilters').onclick = () => {
+        document.getElementById('priceRange').value = 1200;
+        document.getElementById('priceValue').innerText = 'Up to AED 1200';
+        document.getElementById('brandFilter').value = 'all';
+        document.getElementById('typeFilter').value = 'all';
+        document.getElementById('fuelFilter').value = 'all';
+        renderCars();
+    };
+
+    renderCars();
+</script>
+
+<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance</footer>
+</body>
+</html>
