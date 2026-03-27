@@ -7,101 +7,540 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: #F5F5F7; }
+        .btn-glow:hover { box-shadow: 0 0 12px #E10600; transform: scale(1.02); transition: 0.2s; }
+        .dropdown-menu { transition: all 0.2s; }
+        
+        /* Custom Receipt Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #bookingconfirm {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #f1f5f9;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 28px;
+            padding: 28px 24px;
+            text-align: left;
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .popup-overlay.active #bookingconfirm {
+            transform: scale(1);
+        }
+        #bookingconfirm h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .receipt-id {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .r-label {
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .r-value {
+            font-weight: 600;
+            text-align: right;
+        }
+        .close-btn {
+            margin-top: 24px;
+            width: 100%;
+            background: #E10600;
+            color: white;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .close-btn:hover {
+            background: #b00500;
+            transform: scale(1.02);
+        }
+        .file-input-label {
+            background: #f3f4f6;
+            border: 1px dashed #E10600;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .file-input-label:hover {
+            background: #fee2e2;
+        }
+    </style>
 </head>
-<body class="bg-[#F5F5F7]">
+<body>
 
+<!-- Header (white background, sticky) -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2"><i class="fas fa-car text-[#E10600] text-2xl"></i><span class="font-extrabold text-2xl">X CARS <span class="text-[#E10600]">RENTAL</span></span></div>
-        <nav class="hidden md:flex gap-8 font-semibold"><a href="index.html">Home</a><a href="cars.html">Cars</a><a href="contact.html">Contact</a></nav>
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center">
+            <img src="images/xcarlogo.jpeg" class="h-10 md:h-12 w-auto rounded-lg object-contain brightness-200 contrast-110" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/200x60/E10600/white?text=X+CARS'">
+        </div>
+        <nav class="hidden md:flex gap-8 font-semibold">
+            <a href="index.html" class="hover:text-[#E10600] transition" data-i18n="nav_home">Home</a>
+            <a href="cars.html" class="hover:text-[#E10600] transition" data-i18n="nav_cars">Cars</a>
+            <a href="contact.html" class="hover:text-[#E10600] transition" data-i18n="nav_contact">Contact</a>
+        </nav>
+        <!-- Right group -->
+        <div class="flex items-center gap-3 flex-wrap justify-end">
+            <!-- Language Dropdown -->
+            <div class="relative">
+                <button id="langBtn" class="flex items-center gap-1 bg-gray-100 text-gray-800 px-3 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition border border-gray-300">🌐 English</button>
+                <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-xl overflow-hidden z-50 dropdown-menu">
+                    <ul class="text-sm max-h-60 overflow-y-auto">
+                        <li data-lang="en" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇬🇧 English</li>
+                        <li data-lang="ar" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 العربية</li>
+                        <li data-lang="ru" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇷🇺 русский</li>
+                        <li data-lang="zh" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇨🇳 中文</li>
+                        <li data-lang="fr" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇫🇷 Français</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Currency Dropdown -->
+            <div class="relative">
+                <button id="currencyBtn" class="flex items-center gap-1 bg-gray-100 text-gray-800 px-3 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition border border-gray-300">💲 AED</button>
+                <div id="currencyMenu" class="hidden absolute right-0 mt-2 w-36 bg-white shadow-xl rounded-xl overflow-hidden z-50 dropdown-menu">
+                    <ul class="text-sm">
+                        <li data-currency="AED" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 AED</li>
+                        <li data-currency="USD" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇺🇸 USD</li>
+                        <li data-currency="EUR" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇪🇺 EUR</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Call Button -->
+            <a href="tel:+971503666260" class="bg-gray-100 text-gray-800 px-3 py-2 rounded-full text-sm font-medium hover:bg-[#E10600] hover:text-white transition flex items-center gap-1"><i class="fas fa-phone-alt"></i> <span class="hidden md:inline" data-i18n="call">Call</span></a>
+            <!-- Book Now -->
+            <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm btn-glow shadow-md hover:shadow-lg transition" data-i18n="book_now">Book Now</a>
+        </div>
     </div>
 </header>
 
-<main class="max-w-5xl mx-auto px-5 md:px-8 py-12">
+<main class="max-w-6xl mx-auto px-5 md:px-8 py-12 pt-8">
     <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div class="bg-[#E10600] px-8 py-6"><h1 class="text-3xl font-bold text-white">Complete Your Booking</h1><p class="text-white/80">Fill in the details to reserve your dream car</p></div>
+        <div class="bg-[#E10600] px-8 py-6">
+            <h1 class="text-3xl font-bold text-white" data-i18n="booking_title">Complete Your Booking</h1>
+            <p class="text-white/80" data-i18n="booking_subtitle">Fill in the details to reserve your dream car</p>
+        </div>
         
         <div class="p-8">
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Form -->
-                <div>
-                    <form id="bookingForm" class="space-y-5">
-                        <div><label class="font-semibold block mb-2">Full Name *</label><input type="text" id="fullName" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></div>
-                        <div><label class="font-semibold block mb-2">Phone Number *</label><input type="tel" id="phone" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></div>
-                        <div><label class="font-semibold block mb-2">Email Address</label><input type="email" id="email" class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></div>
-                        <div class="grid grid-cols-2 gap-3"><div><label class="font-semibold block mb-2">Pickup Date</label><input type="date" id="pickupDate" class="w-full border rounded-xl p-3"></div><div><label class="font-semibold block mb-2">Return Date</label><input type="date" id="returnDate" class="w-full border rounded-xl p-3"></div></div>
-                        <div><label class="font-semibold block mb-2">Pickup Location</label><select id="location" class="w-full border rounded-xl p-3"><option>Dubai Marina</option><option>Downtown Dubai</option><option>Abu Dhabi</option></select></div>
-                        <button type="submit" class="w-full bg-[#E10600] text-white py-3 rounded-full font-bold text-lg hover:bg-red-700 transition">Confirm Booking →</button>
-                        <button type="button" onclick="whatsappBooking()" class="w-full bg-green-600 text-white py-3 rounded-full font-bold text-lg mt-3"><i class="fab fa-whatsapp"></i> Book via WhatsApp</button>
-                    </form>
-                </div>
+            <form id="bookingForm" class="space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Left Column: Customer Details -->
+                    <div class="space-y-5">
+                        <h2 class="text-xl font-bold border-l-4 border-[#E10600] pl-3" data-i18n="customer_details">Customer Details</h2>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="full_name">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none">
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="whatsapp_number">WhatsApp Number or Alternate Mobile *</label>
+                            <input type="tel" id="phone" name="phone" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none">
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="email_address">Email Address *</label>
+                            <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none">
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="document_upload">Documents Upload (Emirates ID / Driving License / Passport) *</label>
+                            <div class="file-input-label" onclick="document.getElementById('documentFile').click()">
+                                <i class="fas fa-cloud-upload-alt text-[#E10600] text-2xl"></i>
+                                <p class="text-sm text-gray-500 mt-1" data-i18n="click_to_upload">Click to upload document</p>
+                            </div>
+                            <input type="file" id="documentFile" name="documentFile" accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                            <p id="fileNameDisplay" class="text-xs text-gray-500 mt-2"></p>
+                        </div>
+                    </div>
 
-                <!-- Booking Summary with Dynamic Price Calculator -->
-                <div class="bg-gray-50 rounded-2xl p-6">
-                    <h3 class="font-bold text-xl mb-4">Booking Summary</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between"><span class="text-gray-600">Selected Car:</span><span id="summaryCar" class="font-semibold">BMW X6 2026</span></div>
-                        <div class="flex justify-between"><span class="text-gray-600">Daily Rate:</span><span id="summaryRate" class="font-semibold">AED 550</span></div>
-                        <div class="flex justify-between"><span class="text-gray-600">Rental Days:</span><span id="summaryDays" class="font-semibold">3 days</span></div>
-                        <div class="border-t pt-3 mt-3"><div class="flex justify-between text-lg"><span class="font-bold">Total Amount:</span><span id="summaryTotal" class="font-bold text-2xl text-[#E10600]">AED 1650</span></div></div>
-                        <div class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Full insurance coverage included<br><i class="fas fa-clock"></i> Free cancellation 24h before pickup</div>
+                    <!-- Right Column: Booking Details -->
+                    <div class="space-y-5">
+                        <h2 class="text-xl font-bold border-l-4 border-[#E10600] pl-3" data-i18n="booking_details">Booking Details</h2>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="select_car">Select Car *</label>
+                            <select id="carSelect" name="carName" required class="w-full bg-white border border-gray-300 rounded-xl p-3">
+                                <option value="">Select Car</option>
+                                <option value="Nissan Sunny">Nissan Sunny</option>
+                                <option value="Toyota Yaris">Toyota Yaris</option>
+                                <option value="Kia Pegas">Kia Pegas</option>
+                                <option value="Hyundai Accent">Hyundai Accent</option>
+                                <option value="Toyota Corolla">Toyota Corolla</option>
+                                <option value="Hyundai Elantra">Hyundai Elantra</option>
+                                <option value="Kia K5">Kia K5</option>
+                                <option value="Mazda 6">Mazda 6</option>
+                                <option value="Toyota Fortuner">Toyota Fortuner</option>
+                                <option value="Nissan X-Trail">Nissan X-Trail</option>
+                                <option value="Hyundai Creta">Hyundai Creta</option>
+                                <option value="Kia Sportage">Kia Sportage</option>
+                                <option value="Nissan Kicks">Nissan Kicks</option>
+                                <option value="Kia K4">Kia K4</option>
+                                <option value="Toyota Camry">Toyota Camry</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="font-semibold block mb-2" data-i18n="pickup_date">Pickup Date *</label>
+                                <input type="date" id="pickupDate" name="pickupDate" required class="w-full border rounded-xl p-3">
+                            </div>
+                            <div>
+                                <label class="font-semibold block mb-2" data-i18n="return_date">Return Date *</label>
+                                <input type="date" id="returnDate" name="returnDate" required class="w-full border rounded-xl p-3">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="pickup_location">Pickup Location *</label>
+                            <select id="location" name="location" class="w-full border rounded-xl p-3">
+                                <option value="Dubai Marina">Dubai Marina</option>
+                                <option value="Downtown Dubai">Downtown Dubai</option>
+                                <option value="Abu Dhabi">Abu Dhabi</option>
+                                <option value="Custom">Custom (specify in notes)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-2" data-i18n="special_requests">Special Requests / Notes</label>
+                            <textarea id="notes" name="notes" rows="3" class="w-full border border-gray-300 rounded-xl p-3 focus:border-[#E10600] outline-none"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Booking Summary (added back) -->
+                <div class="bg-gray-50 rounded-2xl p-6 mt-4">
+                    <h3 class="font-bold text-xl mb-4" data-i18n="booking_summary">Booking Summary</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between"><span class="text-gray-600" data-i18n="selected_car">Selected Car:</span><span id="summaryCar" class="font-semibold">—</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600" data-i18n="daily_rate">Daily Rate:</span><span id="summaryRate" class="font-semibold">—</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600" data-i18n="rental_days">Rental Days:</span><span id="summaryDays" class="font-semibold">—</span></div>
+                        <div class="border-t pt-3 mt-3"><div class="flex justify-between text-lg"><span class="font-bold" data-i18n="total_amount">Total Amount:</span><span id="summaryTotal" class="font-bold text-2xl text-[#E10600]">—</span></div></div>
+                        <div class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> <span data-i18n="full_insurance">Full insurance coverage included</span><br><i class="fas fa-clock"></i> <span data-i18n="free_cancellation">Free cancellation up to 24h before pickup</span></div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button type="submit" class="flex-1 bg-[#E10600] text-white py-3 rounded-full font-bold text-lg hover:bg-red-700 transition" data-i18n="confirm_booking">Confirm Booking →</button>
+                    <button type="button" id="whatsappBookingBtn" class="flex-1 bg-green-600 text-white py-3 rounded-full font-bold text-lg hover:bg-green-700 transition"><i class="fab fa-whatsapp"></i> <span data-i18n="book_via_whatsapp">Book via WhatsApp</span></button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
 
+<!-- Custom Receipt Popup -->
+<div id="bookingConfirmPopup" class="popup-overlay">
+    <div id="bookingconfirm">
+        <h2><i class="fas fa-check-circle"></i> ✅ Booking Confirmed!</h2>
+        <p class="receipt-id">Payment ID: <strong id="r_payId">—</strong></p>
+        <div class="receipt-row"><span class="r-label">Customer name</span><span class="r-value" id="r_name">—</span></div>
+        <div class="receipt-row"><span class="r-label">Phone</span><span class="r-value" id="r_phone">—</span></div>
+        <div class="receipt-row"><span class="r-label">Email Address</span><span class="r-value" id="r_email">—</span></div>
+        <div class="receipt-row"><span class="r-label">Select Car</span><span class="r-value" id="r_car">—</span></div>
+        <div class="receipt-row"><span class="r-label">Pickup Location</span><span class="r-value" id="r_location">—</span></div>
+        <div class="receipt-row"><span class="r-label">Pickup Date & Return</span><span class="r-value" id="r_date">—</span></div>
+        <p style="margin-top:16px;font-size:0.8rem;color:#e10600;">We will contact you within 1 hour. Thank you for choosing X Cars Rental!</p>
+        <button class="close-btn" onclick="closeBookingPopup()">Close & Done</button>
+    </div>
+</div>
+
+<footer class="bg-[#111111] text-white mt-20 py-12">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <div class="bg-white/10 backdrop-blur-sm p-3 rounded-xl inline-flex items-center justify-center mb-4">
+                    <img src="images/logo.jpeg" class="h-20 w-auto" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/150x60/E10600/white?text=X+CARS'">
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed" data-i18n="footer_desc">Premium car rental services across UAE since 2020. Drive the latest models with full insurance and fast pickup.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4" data-i18n="quick_links">Quick Links</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li><a href="index.html" class="hover:text-white transition" data-i18n="home">Home</a></li>
+                    <li><a href="cars.html" class="hover:text-white transition" data-i18n="our_fleet">Our Fleet</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition" data-i18n="contact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4" data-i18n="contact">Contact</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fas fa-phone-alt w-5 text-[#E10600]"></i><a href="tel:+971503666260" class="hover:text-white transition">+971 50 366 6260</a></li>
+                    <li class="flex items-center gap-2"><i class="fab fa-whatsapp w-5 text-green-500"></i><a href="https://wa.me/971503666260" target="_blank" class="hover:text-white transition">WhatsApp Available</a></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-envelope w-5 text-[#E10600]"></i><a href="mailto:info@xcars.ae" class="hover:text-white transition">info@xcars.ae</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4" data-i18n="follow_us">Follow Us</h4>
+                <div class="flex gap-5 text-2xl">
+                    <a href="https://www.instagram.com/x.cars.rental_uq" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://share.google/elvaM9WoxW33UHsfz" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-google"></i></a>
+                    <a href="https://www.tiktok.com/@x.cars.rental" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <p class="mt-4 text-xs text-gray-500" data-i18n="follow_text">Follow us for exclusive offers and latest updates</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm" data-i18n="copyright">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance | Fast Pickup</div>
+    </div>
+</footer>
+
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const carId = urlParams.get('car') || '1';
-    const preDays = urlParams.get('days') || '3';
-    
-    const cars = { 1:{name:"BMW X6 2026", price:550}, 2:{name:"Mercedes EQS", price:750}, 3:{name:"Nissan Patrol", price:450}, 4:{name:"Porsche Cayenne", price:890} };
-    const selectedCar = cars[carId] || cars[1];
-    
-    document.getElementById('summaryCar').innerText = selectedCar.name;
-    document.getElementById('summaryRate').innerText = `AED ${selectedCar.price}`;
-    
+    // ==================== CAR DATA ====================
+    const carsDB = {
+        "Nissan Sunny": 90,
+        "Toyota Yaris": 100,
+        "Kia Pegas": 150,
+        "Hyundai Accent": 160,
+        "Toyota Corolla": 180,
+        "Hyundai Elantra": 200,
+        "Kia K5": 220,
+        "Mazda 6": 250,
+        "Toyota Fortuner": 400,
+        "Nissan X-Trail": 350,
+        "Hyundai Creta": 280,
+        "Kia Sportage": 300,
+        "Nissan Kicks": 250,
+        "Kia K4": 210,
+        "Toyota Camry": 260
+    };
+
+    // Helper to get price from car name
+    function getCarPrice(carName) {
+        return carsDB[carName] || 0;
+    }
+
+    // ==================== i18n & Currency ====================
+    let translations = {};
+    let currentLang = localStorage.getItem('language') || 'en';
+    let currentCurrency = localStorage.getItem('currency') || 'AED';
+    const exchangeRates = { AED: 1, USD: 0.27, EUR: 0.25 };
+    let currentRate = exchangeRates[currentCurrency] || 1;
+
+    async function loadTranslations() {
+        try {
+            const response = await fetch('translations.json');
+            translations = await response.json();
+            applyLanguage(currentLang);
+            applyCurrency(currentCurrency);
+        } catch (err) { console.error('Translation error:', err); }
+    }
+
+    function applyLanguage(lang) {
+        if (!translations[lang]) lang = 'en';
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                if (translations[lang][key].includes('<')) el.innerHTML = translations[lang][key];
+                else el.textContent = translations[lang][key];
+            }
+        });
+        const langBtn = document.getElementById('langBtn');
+        if (langBtn) {
+            const langNames = { en: 'English', ar: 'العربية', ru: 'русский', zh: '中文', fr: 'Français' };
+            langBtn.innerHTML = `🌐 ${langNames[lang] || lang.toUpperCase()}`;
+        }
+        localStorage.setItem('language', lang);
+        currentLang = lang;
+    }
+
+    function applyCurrency(currency) {
+        currentRate = exchangeRates[currency] || 1;
+        const currencyBtn = document.getElementById('currencyBtn');
+        if (currencyBtn) currencyBtn.innerHTML = currency === 'AED' ? '💲 AED' : (currency === 'USD' ? '💲 USD' : '💲 EUR');
+        localStorage.setItem('currency', currency);
+        currentCurrency = currency;
+        updateSummary();
+    }
+
+    // ==================== SUMMARY UPDATE ====================
+    const carSelect = document.getElementById('carSelect');
     const pickupDate = document.getElementById('pickupDate');
     const returnDate = document.getElementById('returnDate');
-    const summaryDays = document.getElementById('summaryDays');
-    const summaryTotal = document.getElementById('summaryTotal');
-    
+    const summaryCarSpan = document.getElementById('summaryCar');
+    const summaryRateSpan = document.getElementById('summaryRate');
+    const summaryDaysSpan = document.getElementById('summaryDays');
+    const summaryTotalSpan = document.getElementById('summaryTotal');
+
     function calculateDays() {
-        if(pickupDate.value && returnDate.value) {
+        if (pickupDate.value && returnDate.value) {
             const start = new Date(pickupDate.value);
             const end = new Date(returnDate.value);
             const days = Math.ceil((end - start) / (1000 * 3600 * 24));
-            if(days > 0) {
-                summaryDays.innerText = `${days} days`;
-                summaryTotal.innerText = `AED ${selectedCar.price * days}`;
-                return days;
-            }
+            if (days > 0) return days;
         }
-        summaryDays.innerText = `${preDays} days`;
-        summaryTotal.innerText = `AED ${selectedCar.price * preDays}`;
-        return preDays;
+        return 1;
     }
-    
-    pickupDate.addEventListener('change', calculateDays);
-    returnDate.addEventListener('change', calculateDays);
-    calculateDays();
-    
-    document.getElementById('bookingForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('fullName').value;
-        if(!name) { alert('Please enter your name'); return; }
-        alert(`✅ Thank you ${name}! Your booking for ${selectedCar.name} has been received. We'll contact you shortly via WhatsApp.`);
-    });
-    
-    window.whatsappBooking = () => {
-        const name = document.getElementById('fullName').value || 'Guest';
-        const days = calculateDays();
-        window.open(`https://wa.me/971503666260?text=Booking Request:%0AName: ${name}%0ACar: ${selectedCar.name}%0ADays: ${days}%0ATotal: AED ${selectedCar.price * days}%0APlease confirm availability.`, '_blank');
-    };
-</script>
 
-<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental | Book with Confidence</footer>
+    function updateSummary() {
+        const selectedCarName = carSelect.value;
+        const priceAED = getCarPrice(selectedCarName);
+        const days = calculateDays();
+        const totalAED = priceAED * days;
+        const convertedPrice = (priceAED * currentRate).toFixed(0);
+        const convertedTotal = (totalAED * currentRate).toFixed(0);
+        summaryCarSpan.innerText = selectedCarName || '—';
+        summaryRateSpan.innerText = priceAED ? `${currentCurrency} ${convertedPrice}` : '—';
+        summaryDaysSpan.innerText = days > 0 ? `${days} day${days !== 1 ? 's' : ''}` : '—';
+        summaryTotalSpan.innerText = priceAED ? `${currentCurrency} ${convertedTotal}` : '—';
+    }
+
+    carSelect.addEventListener('change', updateSummary);
+    pickupDate.addEventListener('change', updateSummary);
+    returnDate.addEventListener('change', updateSummary);
+    updateSummary();
+
+    // File upload display
+    document.getElementById('documentFile').addEventListener('change', function(e) {
+        const fileName = e.target.files[0]?.name || 'No file selected';
+        document.getElementById('fileNameDisplay').innerText = fileName;
+    });
+
+    // ==================== FORM SUBMIT – SHOW RECEIPT POPUP ====================
+    const form = document.getElementById('bookingForm');
+    const popup = document.getElementById('bookingConfirmPopup');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Gather data
+        const name = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const car = carSelect.value;
+        const location = document.getElementById('location').value;
+        const pickup = pickupDate.value;
+        const ret = returnDate.value;
+        const days = calculateDays();
+        const priceAED = getCarPrice(car);
+        const totalAED = priceAED * days;
+        const convertedTotal = (totalAED * currentRate).toFixed(0);
+
+        // Generate random payment ID
+        const paymentId = 'XCARS-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+        // Fill receipt
+        document.getElementById('r_payId').innerText = paymentId;
+        document.getElementById('r_name').innerText = name || '—';
+        document.getElementById('r_phone').innerText = phone || '—';
+        document.getElementById('r_email').innerText = email || '—';
+        document.getElementById('r_car').innerText = car || '—';
+        document.getElementById('r_location').innerText = location || '—';
+        document.getElementById('r_date').innerText = pickup && ret ? `${pickup} → ${ret} (${days} days)` : '—';
+
+        // Show popup
+        popup.classList.add('active');
+
+        // Optionally reset form? We'll keep it but you may clear after close.
+        // We'll not reset automatically to allow checking, but you can uncomment:
+        // form.reset();
+    });
+
+    function closeBookingPopup() {
+        popup.classList.remove('active');
+        // Reset form after closing (optional)
+        form.reset();
+        document.getElementById('fileNameDisplay').innerText = '';
+        updateSummary(); // reset summary display
+    }
+
+    // ==================== WHATSAPP BOOKING ====================
+    document.getElementById('whatsappBookingBtn').addEventListener('click', () => {
+        const name = document.getElementById('fullName').value.trim() || 'Guest';
+        const phone = document.getElementById('phone').value.trim() || '';
+        const email = document.getElementById('email').value.trim() || '';
+        const car = carSelect.value;
+        const pickup = pickupDate.value;
+        const ret = returnDate.value;
+        const location = document.getElementById('location').value;
+        const notes = document.getElementById('notes').value.trim();
+        const days = calculateDays();
+        const priceAED = getCarPrice(car);
+        const totalAED = priceAED * days;
+        const convertedTotal = (totalAED * currentRate).toFixed(0);
+
+        let msg = `Hello X Cars! I'd like to book a car.%0A%0A`;
+        msg += `Name: ${name}%0A`;
+        msg += `Phone: ${phone}%0A`;
+        msg += `Email: ${email}%0A`;
+        msg += `Car: ${car}%0A`;
+        msg += `Pickup: ${pickup}%0A`;
+        msg += `Return: ${ret}%0A`;
+        msg += `Location: ${location}%0A`;
+        msg += `Days: ${days}%0A`;
+        msg += `Total: ${currentCurrency} ${convertedTotal}%0A`;
+        if (notes) msg += `Notes: ${notes}%0A`;
+        msg += `%0APlease confirm availability.`;
+
+        window.open(`https://wa.me/971503666260?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    // ==================== DROPDOWN TOGGLES ====================
+    document.getElementById('langBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('langMenu').classList.toggle('hidden');
+    });
+    document.getElementById('currencyBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('currencyMenu').classList.toggle('hidden');
+    });
+    window.addEventListener('click', (e) => {
+        if (!e.target.closest('#langBtn') && !e.target.closest('#langMenu')) {
+            document.getElementById('langMenu')?.classList.add('hidden');
+        }
+        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyMenu')) {
+            document.getElementById('currencyMenu')?.classList.add('hidden');
+        }
+    });
+
+    document.querySelectorAll('#langMenu li').forEach(li => {
+        li.addEventListener('click', () => {
+            const lang = li.getAttribute('data-lang');
+            if (lang) { applyLanguage(lang); document.getElementById('langMenu').classList.add('hidden'); }
+        });
+    });
+    document.querySelectorAll('#currencyMenu li').forEach(li => {
+        li.addEventListener('click', () => {
+            const currency = li.getAttribute('data-currency');
+            if (currency) { applyCurrency(currency); document.getElementById('currencyMenu').classList.add('hidden'); }
+        });
+    });
+
+    loadTranslations();
+</script>
 </body>
 </html>
