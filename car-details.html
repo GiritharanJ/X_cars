@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Details | X Cars Rental</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+   <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -18,12 +18,46 @@
 <body>
 
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center">
-            <img src="images/xcarlogo.jpeg" class="h-10 md:h-12 w-auto rounded-lg" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/200x60/E10600/white?text=X+CARS'">
+            <img src="images/xcarlogo.jpeg" class="h-10 md:h-12 w-auto rounded-lg object-contain brightness-200 contrast-110" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/200x60/E10600/white?text=X+CARS'">
         </div>
-        <nav class="hidden md:flex gap-8 font-semibold"><a href="index.html">Home</a><a href="cars.html">Cars</a><a href="contact.html">Contact</a></nav>
-        <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm">Book Now</a>
+        <nav class="hidden md:flex gap-8 font-semibold">
+            <a href="index.html" class="hover:text-[#E10600] transition" data-i18n="nav_home">Home</a>
+            <a href="cars.html" class="hover:text-[#E10600] transition" data-i18n="nav_cars">Cars</a>
+            <a href="contact.html" class="hover:text-[#E10600] transition" data-i18n="nav_contact">Contact</a>
+        </nav>
+        <!-- Right group -->
+        <div class="flex items-center gap-3 flex-wrap justify-end">
+            <!-- Language Dropdown -->
+            <div class="relative">
+                <button id="langBtn" class="flex items-center gap-1 bg-gray-100 text-gray-800 px-3 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition border border-gray-300">🌐 English</button>
+                <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-xl overflow-hidden z-50 dropdown-menu">
+                    <ul class="text-sm max-h-60 overflow-y-auto">
+                        <li data-lang="en" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇬🇧 English</li>
+                        <li data-lang="ar" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 العربية</li>
+                        <li data-lang="ru" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇷🇺 русский</li>
+                        <li data-lang="zh" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇨🇳 中文</li>
+                        <li data-lang="fr" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇫🇷 Français</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Currency Dropdown -->
+            <div class="relative">
+                <button id="currencyBtn" class="flex items-center gap-1 bg-gray-100 text-gray-800 px-3 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition border border-gray-300">💲 AED</button>
+                <div id="currencyMenu" class="hidden absolute right-0 mt-2 w-36 bg-white shadow-xl rounded-xl overflow-hidden z-50 dropdown-menu">
+                    <ul class="text-sm">
+                        <li data-currency="AED" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 AED</li>
+                        <li data-currency="USD" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇺🇸 USD</li>
+                        <li data-currency="EUR" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇪🇺 EUR</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Call Button -->
+            <a href="tel:+971503666260" class="bg-gray-100 text-gray-800 px-3 py-2 rounded-full text-sm font-medium hover:bg-[#E10600] hover:text-white transition flex items-center gap-1"><i class="fas fa-phone-alt"></i> <span class="hidden md:inline" data-i18n="call">Call</span></a>
+            <!-- Book Now -->
+            <a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm btn-glow shadow-md hover:shadow-lg transition" data-i18n="book_now">Book Now</a>
+        </div>
     </div>
 </header>
 
@@ -40,22 +74,22 @@
             <!-- Specs & Description -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
                 <h1 id="carName" class="text-3xl font-bold"></h1>
-                <div class="flex gap-4 mt-2 text-gray-500"><span><i class="fas fa-star text-yellow-400"></i> 4.9 (128 reviews)</span></div>
+                <div class="flex gap-4 mt-2 text-gray-500"><span><i class="fas fa-star text-yellow-400"></i> <span data-i18n="rating">4.9 (128 reviews)</span></span></div>
                 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 py-6 border-y">
                     <div><i class="fas fa-users text-[#E10600] text-xl"></i><p class="font-bold" id="carSeats"></p></div>
                     <div><i class="fas fa-gas-pump text-[#E10600] text-xl"></i><p class="font-bold" id="carFuel"></p></div>
                     <div><i class="fas fa-cog text-[#E10600] text-xl"></i><p class="font-bold" id="carTrans"></p></div>
-                    <div><i class="fas fa-road text-[#E10600] text-xl"></i><p class="font-bold">Unlimited KM</p></div>
+                    <div><i class="fas fa-road text-[#E10600] text-xl"></i><p class="font-bold" data-i18n="unlimited_km">Unlimited KM</p></div>
                 </div>
 
                 <div class="mt-6">
-                    <h3 class="font-bold text-xl mb-3">Vehicle Overview</h3>
+                    <h3 class="font-bold text-xl mb-3" data-i18n="vehicle_overview">Vehicle Overview</h3>
                     <p id="carDesc" class="text-gray-600 leading-relaxed"></p>
                 </div>
 
                 <div class="mt-6">
-                    <h3 class="font-bold text-xl mb-3">Key Features</h3>
+                    <h3 class="font-bold text-xl mb-3" data-i18n="key_features">Key Features</h3>
                     <div class="grid grid-cols-2 gap-3" id="carFeatures">
                         <!-- features will be filled dynamically -->
                     </div>
@@ -64,7 +98,7 @@
 
             <!-- Recommended Cars -->
             <div class="mt-6">
-                <h3 class="font-bold text-xl mb-4">✨ Recommended for You</h3>
+                <h3 class="font-bold text-xl mb-4" data-i18n="recommended_for_you">✨ Recommended for You</h3>
                 <div id="recommendedCars" class="grid grid-cols-2 gap-4"></div>
             </div>
         </div>
@@ -72,51 +106,89 @@
         <!-- Sticky Booking Box -->
         <div class="lg:col-span-1">
             <div class="sticky-box bg-white rounded-2xl p-6 shadow-lg">
-                <p class="text-gray-500 text-sm">Starting from</p>
-                <p class="text-4xl font-bold text-[#E10600]" id="carPrice"></p>
-                <p class="text-sm text-gray-500">per day + full insurance included</p>
+                <p class="text-gray-500 text-sm" data-i18n="starting_from">Starting from</p>
+                <p class="text-4xl font-bold text-[#E10600]"><span id="carPriceDisplay" data-price-aed="0">AED 0</span></p>
+                <p class="text-sm text-gray-500" data-i18n="per_day">per day + full insurance included</p>
 
                 <div class="mt-6">
-                    <label class="font-semibold text-sm">Rental Duration (Days)</label>
+                    <label class="font-semibold text-sm" data-i18n="rental_duration">Rental Duration (Days)</label>
                     <input type="number" id="rentalDays" min="1" value="3" class="w-full border rounded-xl p-3 mt-2">
                     <div class="flex justify-between mt-4 p-3 bg-gray-50 rounded-xl">
-                        <span class="font-semibold">Total Price:</span>
-                        <span id="totalPrice" class="text-2xl font-bold text-[#E10600]"></span>
+                        <span class="font-semibold" data-i18n="total_price">Total Price:</span>
+                        <span id="totalPrice" class="text-2xl font-bold text-[#E10600]">AED 0</span>
                     </div>
                 </div>
 
                 <div class="mt-6 space-y-3">
-                    <a href="#" id="bookNowBtn" class="block bg-[#E10600] text-white text-center py-3 rounded-full font-bold text-lg hover:shadow-lg transition">🔴 Book Now</a>
-                    <button onclick="whatsappBook()" class="block bg-green-600 text-white text-center py-3 rounded-full font-bold text-lg w-full"><i class="fab fa-whatsapp"></i> WhatsApp Booking</button>
+                    <a href="#" id="bookNowBtn" class="block bg-[#E10600] text-white text-center py-3 rounded-full font-bold text-lg hover:shadow-lg transition" data-i18n="book_now">🔴 Book Now</a>
+                    <button onclick="whatsappBook()" class="block bg-green-600 text-white text-center py-3 rounded-full font-bold text-lg w-full"><i class="fab fa-whatsapp"></i> <span data-i18n="whatsapp_booking">WhatsApp Booking</span></button>
                 </div>
 
                 <div class="mt-4 text-center text-xs text-gray-500">
-                    <i class="fas fa-shield-alt"></i> Free cancellation up to 24h before pickup
+                    <i class="fas fa-shield-alt"></i> <span data-i18n="free_cancellation">Free cancellation up to 24h before pickup</span>
                 </div>
             </div>
         </div>
     </div>
 </main>
 
-<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental UAE | Drive the Future</footer>
+<footer class="bg-[#111111] text-white mt-20 py-12">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <div class="bg-white/10 backdrop-blur-sm p-3 rounded-xl inline-flex items-center justify-center mb-4">
+                    <img src="images/logo.jpeg" class="h-20 w-auto" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/150x60/E10600/white?text=X+CARS'">
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed" data-i18n="footer_desc">Premium car rental services across UAE since 2020. Drive the latest models with full insurance and fast pickup.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4" data-i18n="quick_links">Quick Links</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li><a href="index.html" class="hover:text-white transition" data-i18n="home">Home</a></li>
+                    <li><a href="cars.html" class="hover:text-white transition" data-i18n="our_fleet">Our Fleet</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition" data-i18n="contact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4" data-i18n="contact">Contact</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fas fa-phone-alt w-5 text-[#E10600]"></i><a href="tel:+971503666260" class="hover:text-white transition">+971 50 366 6260</a></li>
+                    <li class="flex items-center gap-2"><i class="fab fa-whatsapp w-5 text-green-500"></i><a href="https://wa.me/971503666260" target="_blank" class="hover:text-white transition">WhatsApp Available</a></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-envelope w-5 text-[#E10600]"></i><a href="mailto:info@xcars.ae" class="hover:text-white transition">info@xcars.ae</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4" data-i18n="follow_us">Follow Us</h4>
+                <div class="flex gap-5 text-2xl">
+                    <a href="https://www.instagram.com/x.cars.rental_uq" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://share.google/elvaM9WoxW33UHsfz" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-google"></i></a>
+                    <a href="https://www.tiktok.com/@x.cars.rental" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <p class="mt-4 text-xs text-gray-500" data-i18n="follow_text">Follow us for exclusive offers and latest updates</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm" data-i18n="copyright">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance | Fast Pickup</div>
+    </div>
+</footer>
 
 <script>
-    // Complete car database (same as cars.html)
+    // ==================== CAR DATABASE ====================
     const carsData = {
-        1: { name:"Kia Pegas", price:150, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_pegas.png", desc:"Compact sedan with excellent fuel efficiency, ideal for city driving. Features include air conditioning, power windows, and a smooth automatic transmission.", features:["Bluetooth Connectivity","Rear Parking Sensors","Power Windows","Central Locking"] },
-        2: { name:"Hyundai Accent", price:160, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Hyundai", img:"images/hyundai_accent.png", desc:"Reliable and stylish sedan, perfect for daily commutes. Spacious interior with modern tech and safety features.", features:["Touchscreen Display","Rear Camera","Steering Controls","ABS"] },
-        3: { name:"Toyota Corolla", price:180, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_corolla.png", desc:"World-renowned sedan known for durability and comfort. Great fuel economy and low maintenance.", features:["Toyota Safety Sense","Apple CarPlay","Lane Departure Alert","Pre-Collision System"] },
-        4: { name:"Hyundai Elantra", price:200, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Hyundai", img:"images/hyundai_elantra.png", desc:"Sleek design with a premium interior. Offers a smooth ride and advanced connectivity options.", features:["Wireless Charging","Digital Cluster","Smart Cruise Control","Bose Sound System"] },
-        5: { name:"Kia K5", price:220, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_k5.png", desc:"Sporty mid-size sedan with bold styling. Turbocharged engine option and cutting-edge tech.", features:["Panoramic Sunroof","Heated Seats","LED Lighting","Drive Mode Select"] },
-        6: { name:"Mazda 6", price:250, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Mazda", img:"images/mazda_6.png", desc:"Elegant Japanese sedan with premium materials and responsive handling. A driver's favorite.", features:["Leather Seats","Bose Audio","Heads-Up Display","Adaptive Headlights"] },
-        7: { name:"Toyota Fortuner", price:400, seats:7, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Toyota", img:"images/toyota_fortuner.png", desc:"Rugged 7-seater SUV built for off-road and family adventures. Powerful and spacious.", features:["4x4 Capability","7 Airbags","Rear AC","Touchscreen Navigation"] },
-        8: { name:"Nissan X-Trail", price:350, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Nissan", img:"images/nissan_xtrail.png", desc:"Versatile crossover with flexible seating and advanced safety. Great for urban and light off-road.", features:["ProPILOT Assist","Divide-N-Hide Cargo","Intelligent AWD","Around View Monitor"] },
-        9: { name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta.png", desc:"Compact SUV that blends style and practicality. Loaded with features and comfortable ride.", features:["Panoramic Sunroof","Ventilated Seats","Bose Sound","BlueLink Connected"] },
-        10: { name:"Kia Sportage", price:300, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Kia", img:"images/kia_sportage.png", desc:"Modern compact SUV with striking design. Advanced safety and premium interior.", features:["Dual 12.3-inch Screens","Smart Power Tailgate","Wireless Charging","Highway Driving Assist"] },
-        11: { name:"Nissan Kicks", price:250, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Nissan", img:"images/nissan_kicks.png", desc:"Compact crossover with bold looks and efficient performance. Perfect for city adventures.", features:["360° Camera","Bose Personal Plus Audio","Floating Roof","NissanConnect"] },
-        12: { name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta.png", desc:"Compact SUV that blends style and practicality. Loaded with features and comfortable ride.", features:["Panoramic Sunroof","Ventilated Seats","Bose Sound","BlueLink Connected"] }, // duplicate but kept for completeness
-        13: { name:"Kia K4", price:210, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_k4.png", desc:"New sedan offering a balance of style, comfort, and technology. Ideal for modern drivers.", features:["Large Touchscreen","Digital Cluster","LED Lighting","Smart Key"] },
-        14: { name:"Toyota Camry", price:260, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_camry.png", desc:"Legendary mid-size sedan known for reliability and comfort. Hybrid option available.", features:["Toyota Safety Sense 2.5+","9-inch Screen","Qi Wireless Charging","Panoramic View Monitor"] }
+        1: { name:"Kia Pegas", price:150, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_pegas_details.jpg", desc:"Compact sedan with excellent fuel efficiency, ideal for city driving. Features include air conditioning, power windows, and a smooth automatic transmission.", features:["Bluetooth Connectivity","Rear Parking Sensors","Power Windows","Central Locking"] },
+        2: { name:"Hyundai Accent", price:160, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Hyundai", img:"images/hyundai_accent_details.jpg", desc:"Reliable and stylish sedan, perfect for daily commutes. Spacious interior with modern tech and safety features.", features:["Touchscreen Display","Rear Camera","Steering Controls","ABS"] },
+        3: { name:"Toyota Corolla", price:180, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_corolla_details.jpg", desc:"World-renowned sedan known for durability and comfort. Great fuel economy and low maintenance.", features:["Toyota Safety Sense","Apple CarPlay","Lane Departure Alert","Pre-Collision System"] },
+        4: { name:"Hyundai Elantra", price:200, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Hyundai", img:"images/hyundai_elantra_details.jpg", desc:"Sleek design with a premium interior. Offers a smooth ride and advanced connectivity options.", features:["Wireless Charging","Digital Cluster","Smart Cruise Control","Bose Sound System"] },
+        5: { name:"Kia K5", price:220, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_k5_details.jpg", desc:"Sporty mid-size sedan with bold styling. Turbocharged engine option and cutting-edge tech.", features:["Panoramic Sunroof","Heated Seats","LED Lighting","Drive Mode Select"] },
+        6: { name:"Mazda 6", price:250, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Mazda", img:"images/mazda_6_details.jpg", desc:"Elegant Japanese sedan with premium materials and responsive handling. A driver's favorite.", features:["Leather Seats","Bose Audio","Heads-Up Display","Adaptive Headlights"] },
+        7: { name:"Toyota Fortuner", price:400, seats:7, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Toyota", img:"images/toyota_fortuner_details.jpg", desc:"Rugged 7-seater SUV built for off-road and family adventures. Powerful and spacious.", features:["4x4 Capability","7 Airbags","Rear AC","Touchscreen Navigation"] },
+        8: { name:"Nissan X-Trail", price:350, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Nissan", img:"images/nissan_xtrail_details.jpg", desc:"Versatile crossover with flexible seating and advanced safety. Great for urban and light off-road.", features:["ProPILOT Assist","Divide-N-Hide Cargo","Intelligent AWD","Around View Monitor"] },
+        9: { name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta_details.jpg", desc:"Compact SUV that blends style and practicality. Loaded with features and comfortable ride.", features:["Panoramic Sunroof","Ventilated Seats","Bose Sound","BlueLink Connected"] },
+        10: { name:"Kia Sportage", price:300, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Kia", img:"images/kia_sportage_details.jpg", desc:"Modern compact SUV with striking design. Advanced safety and premium interior.", features:["Dual 12.3-inch Screens","Smart Power Tailgate","Wireless Charging","Highway Driving Assist"] },
+        11: { name:"Nissan Kicks", price:250, seats:5, fuel:"Petrol", trans:"Automatic", type:"SUV", brand:"Nissan", img:"images/nissan_kicks_details.jpg", desc:"Compact crossover with bold looks and efficient performance. Perfect for city adventures.", features:["360° Camera","Bose Personal Plus Audio","Floating Roof","NissanConnect"] },
+        12: { name:"Toyota Yaris", price:100, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_yaris_details.jpg", desc:"Compact and fuel-efficient sedan, ideal for city driving and daily rentals. Offers smooth performance, comfortable seating, and excellent mileage for budget-friendly travel.", features:["Bluetooth Connectivity","Rear Parking Sensors","Air Conditioning","Power Windows","USB Charging Port"] },
+        13: { name:"Kia K4", price:210, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Kia", img:"images/kia_k4_details.jpg", desc:"New sedan offering a balance of style, comfort, and technology. Ideal for modern drivers.", features:["Large Touchscreen","Digital Cluster","LED Lighting","Smart Key"] },
+        14: { name:"Toyota Camry", price:260, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_camry_details.jpg", desc:"Legendary mid-size sedan known for reliability and comfort. Hybrid option available.", features:["Toyota Safety Sense 2.5+","9-inch Screen","Qi Wireless Charging","Panoramic View Monitor"] },
+        15: { name:"Nissan Sunny", price:90, seats:5, fuel:"Petrol", trans:"Automatic", type:"Sedan", brand:"Nissan", img:"images/nissan_sunny_details.jpg", desc:"Affordable and fuel-efficient sedan, perfect for daily city driving and budget-friendly rentals. Comfortable ride with spacious interior and smooth automatic transmission.", features:["Bluetooth Connectivity","Rear Parking Sensors","Air Conditioning","Power Windows","Central Locking"] }
     };
 
     // Get car ID from URL
@@ -125,79 +197,213 @@
     const car = carsData[carId];
 
     if (!car) {
-        // Fallback if ID not found
+        // Fallback
         document.getElementById('carName').innerText = "Car not found";
         document.getElementById('mainImage').src = "https://placehold.co/800x500/EEEEEE/111?text=Car+Not+Found";
         throw new Error("Car not found");
     }
 
-    // Populate page with car details
-    document.getElementById('carName').innerText = car.name;
-    document.getElementById('carSeats').innerText = car.seats + ' Seats';
-    document.getElementById('carFuel').innerText = car.fuel;
-    document.getElementById('carTrans').innerText = car.trans;
-    document.getElementById('carDesc').innerText = car.desc;
-    document.getElementById('carPrice').innerHTML = `AED ${car.price}`;
-    document.getElementById('mainImage').src = car.img;
+    // ==================== i18n & Currency System ====================
+    let translations = {};
+    let currentLang = localStorage.getItem('language') || 'en';
+    let currentCurrency = localStorage.getItem('currency') || 'AED';
+    const exchangeRates = { AED: 1, USD: 0.27, EUR: 0.25 };
 
-    // Features list
-    const featuresContainer = document.getElementById('carFeatures');
-    if (car.features && car.features.length) {
-        featuresContainer.innerHTML = car.features.map(f => `<div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> ${f}</div>`).join('');
-    } else {
-        featuresContainer.innerHTML = '<div class="col-span-2 text-gray-500">Standard features included</div>';
+    // Load translations
+    async function loadTranslations() {
+        try {
+            const response = await fetch('translations.json');
+            translations = await response.json();
+            applyLanguage(currentLang);
+            applyCurrency(currentCurrency);
+            updateUI(); // populate car data after translations loaded
+            updateTotal();
+        } catch (err) {
+            console.error('Failed to load translations:', err);
+            updateUI(); // still populate car data even if translations fail
+        }
     }
 
-    // Gallery (use main image only for now, you can add more images if available)
-    const galleryThumbs = document.getElementById('galleryThumbs');
-    // For simplicity, just show main image as the only thumb (no multiple images)
-    galleryThumbs.innerHTML = `<img src="${car.img}" class="gallery-thumb w-full h-20 rounded-lg object-cover border-2 border-[#E10600]" onclick="document.getElementById('mainImage').src='${car.img}'">`;
-    // If you have additional images (e.g., car_gallery1.png), you could add them here.
+    // Apply language to all elements with data-i18n
+    function applyLanguage(lang) {
+        if (!translations[lang]) lang = 'en';
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                if (translations[lang][key].includes('<')) {
+                    el.innerHTML = translations[lang][key];
+                } else {
+                    el.textContent = translations[lang][key];
+                }
+            }
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (translations[lang] && translations[lang][key]) {
+                el.placeholder = translations[lang][key];
+            }
+        });
+        // Update language button text
+        const langBtn = document.getElementById('langBtn');
+        if (langBtn) {
+            const langNames = { en: 'English', ar: 'العربية', ru: 'русский', zh: '中文', fr: 'Français' };
+            langBtn.innerHTML = `🌐 ${langNames[lang] || lang.toUpperCase()}`;
+        }
+        localStorage.setItem('language', lang);
+        currentLang = lang;
+    }
 
-    // Price calculator
+    // Apply currency to price elements and update total
+    function applyCurrency(currency) {
+        const rate = exchangeRates[currency] || 1;
+        // Update all data-price-aed elements
+        document.querySelectorAll('[data-price-aed]').forEach(el => {
+            const aedValue = parseFloat(el.getAttribute('data-price-aed'));
+            if (!isNaN(aedValue)) {
+                const converted = (aedValue * rate).toFixed(0);
+                el.textContent = `${currency} ${converted}`;
+            }
+        });
+        // Update currency button
+        const currencyBtn = document.getElementById('currencyBtn');
+        if (currencyBtn) {
+            currencyBtn.innerHTML = currency === 'AED' ? '💲 AED' : (currency === 'USD' ? '💲 USD' : '💲 EUR');
+        }
+        localStorage.setItem('currency', currency);
+        currentCurrency = currency;
+        // Recalculate total price (which also updates the display)
+        updateTotal();
+    }
+
+    // Update car details and recommended cars (static data, not translatable except static text)
+    function updateUI() {
+        document.getElementById('carName').innerText = car.name;
+        document.getElementById('carSeats').innerText = car.seats + ' Seats';
+        document.getElementById('carFuel').innerText = car.fuel;
+        document.getElementById('carTrans').innerText = car.trans;
+        document.getElementById('carDesc').innerText = car.desc;
+        document.getElementById('mainImage').src = car.img;
+
+        // Set price attribute for currency conversion
+        const priceSpan = document.getElementById('carPriceDisplay');
+        priceSpan.setAttribute('data-price-aed', car.price);
+        // Force immediate conversion
+        const rate = exchangeRates[currentCurrency] || 1;
+        priceSpan.textContent = `${currentCurrency} ${(car.price * rate).toFixed(0)}`;
+
+        // Features list
+        const featuresContainer = document.getElementById('carFeatures');
+        if (car.features && car.features.length) {
+            featuresContainer.innerHTML = car.features.map(f => `<div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> ${f}</div>`).join('');
+        } else {
+            featuresContainer.innerHTML = '<div class="col-span-2 text-gray-500">Standard features included</div>';
+        }
+
+        // Gallery (main image only)
+        const galleryThumbs = document.getElementById('galleryThumbs');
+        galleryThumbs.innerHTML = `<img src="${car.img}" class="gallery-thumb w-full h-20 rounded-lg object-cover border-2 border-[#E10600]" onclick="document.getElementById('mainImage').src='${car.img}'">`;
+
+        // Recommended cars (with converted prices)
+        let recommendations = Object.values(carsData).filter(c => c.id != carId);
+        const sameType = recommendations.filter(c => c.type === car.type);
+        const sameBrand = recommendations.filter(c => c.brand === car.brand);
+        let recs = [];
+        if (sameType.length >= 2) recs = sameType.slice(0,2);
+        else if (sameBrand.length >= 2) recs = sameBrand.slice(0,2);
+        else recs = recommendations.slice(0,2);
+
+        const recContainer = document.getElementById('recommendedCars');
+        recContainer.innerHTML = recs.map(c => {
+            const convertedPrice = (c.price * (exchangeRates[currentCurrency] || 1)).toFixed(0);
+            return `
+                <a href="car-details.html?id=${c.id}" class="bg-white rounded-xl p-3 flex gap-3 hover:shadow-md transition">
+                    <img src="${c.img}" class="w-20 h-20 rounded-lg object-cover" onerror="this.src='https://placehold.co/400x240/EEEEEE/111?text=${c.name.replace(/ /g, '+')}'">
+                    <div>
+                        <p class="font-bold">${c.name}</p>
+                        <p class="text-[#E10600] font-bold">${currentCurrency} ${convertedPrice}<span class="text-xs text-gray-500">/day</span></p>
+                        <p class="text-xs text-gray-500">${c.type}</p>
+                    </div>
+                </a>
+            `;
+        }).join('');
+    }
+
+    // Price calculator with currency conversion
     const daysInput = document.getElementById('rentalDays');
     const totalSpan = document.getElementById('totalPrice');
     function updateTotal() {
         let days = parseInt(daysInput.value) || 1;
-        totalSpan.innerText = `AED ${car.price * days}`;
+        const rate = exchangeRates[currentCurrency] || 1;
+        const totalAED = car.price * days;
+        const convertedTotal = (totalAED * rate).toFixed(0);
+        totalSpan.textContent = `${currentCurrency} ${convertedTotal}`;
     }
     daysInput.addEventListener('input', updateTotal);
-    updateTotal();
 
-    // Book now link
-    document.getElementById('bookNowBtn').href = `booking.html?car=${carId}&days=${daysInput.value}`;
+    // Book now link update (when currency changes, we need to pass AED total? We'll just use the current days)
+    function updateBookNowLink() {
+        const days = parseInt(daysInput.value) || 1;
+        document.getElementById('bookNowBtn').href = `booking.html?car=${carId}&days=${days}`;
+    }
+    daysInput.addEventListener('input', updateBookNowLink);
+    updateBookNowLink();
 
-    // WhatsApp booking
+    // WhatsApp booking with current currency
     window.whatsappBook = () => {
         const days = parseInt(daysInput.value) || 1;
-        window.open(`https://wa.me/971503666260?text=I want to book ${car.name} for ${days} days. Total AED ${car.price * days}. Please confirm availability.`, '_blank');
+        const rate = exchangeRates[currentCurrency] || 1;
+        const totalAED = car.price * days;
+        const convertedTotal = (totalAED * rate).toFixed(0);
+        const msg = `I want to book ${car.name} for ${days} days. Total ${currentCurrency} ${convertedTotal}. Please confirm availability.`;
+        window.open(`https://wa.me/971503666260?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
-    // Recommended cars: pick 2 cars of same type or brand, excluding current car
-    let recommendations = Object.values(carsData).filter(c => c.id != carId);
-    // Prioritize same type, then same brand
-    const sameType = recommendations.filter(c => c.type === car.type);
-    const sameBrand = recommendations.filter(c => c.brand === car.brand);
-    let recs = [];
-    if (sameType.length >= 2) {
-        recs = sameType.slice(0,2);
-    } else if (sameBrand.length >= 2) {
-        recs = sameBrand.slice(0,2);
-    } else {
-        recs = recommendations.slice(0,2);
-    }
+    // ==================== DROPDOWN TOGGLES ====================
+    document.getElementById('langBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('langMenu').classList.toggle('hidden');
+    });
+    document.getElementById('currencyBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('currencyMenu').classList.toggle('hidden');
+    });
+    window.addEventListener('click', (e) => {
+        if (!e.target.closest('#langBtn') && !e.target.closest('#langMenu')) {
+            document.getElementById('langMenu')?.classList.add('hidden');
+        }
+        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyMenu')) {
+            document.getElementById('currencyMenu')?.classList.add('hidden');
+        }
+    });
 
-    const recContainer = document.getElementById('recommendedCars');
-    recContainer.innerHTML = recs.map(c => `
-        <a href="car-details.html?id=${c.id}" class="bg-white rounded-xl p-3 flex gap-3 hover:shadow-md transition">
-            <img src="${c.img}" class="w-20 h-20 rounded-lg object-cover" onerror="this.src='https://placehold.co/400x240/EEEEEE/111?text=${c.name.replace(/ /g, '+')}'">
-            <div>
-                <p class="font-bold">${c.name}</p>
-                <p class="text-[#E10600] font-bold">AED ${c.price}/day</p>
-                <p class="text-xs text-gray-500">${c.type}</p>
-            </div>
-        </a>
-    `).join('');
+    // Language selection
+    document.querySelectorAll('#langMenu li').forEach(li => {
+        li.addEventListener('click', () => {
+            const lang = li.getAttribute('data-lang');
+            if (lang) {
+                applyLanguage(lang);
+                // Re-apply translations to any dynamically added elements (like recommended cars) but they don't have data-i18n, so fine
+                document.getElementById('langMenu').classList.add('hidden');
+            }
+        });
+    });
+    // Currency selection
+    document.querySelectorAll('#currencyMenu li').forEach(li => {
+        li.addEventListener('click', () => {
+            const currency = li.getAttribute('data-currency');
+            if (currency) {
+                applyCurrency(currency);
+                // Update recommended car prices (they are generated with current currency, but we can just re-render UI)
+                updateUI(); // re-render recommended cars with new currency
+                updateTotal(); // recalc total
+                updateBookNowLink();
+                document.getElementById('currencyMenu').classList.add('hidden');
+            }
+        });
+    });
+
+    // Initial load
+    loadTranslations();
 </script>
 </body>
 </html>
