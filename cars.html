@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Our Fleet | X Cars Rental - Latest 2026 Models in UAE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -12,46 +12,93 @@
         body { background: #F5F5F7; }
         .car-card { transition: all 0.3s ease; }
         .car-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15); }
-        .filter-sidebar { position: sticky; top: 100px; }
         .price-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #E0E0E0; border-radius: 5px; outline: none; }
         .price-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #E10600; border-radius: 50%; cursor: pointer; }
+        .btn-glow:hover { box-shadow: 0 0 12px #E10600; transform: scale(1.02); transition: 0.2s; }
+        .dropdown-menu { transition: all 0.2s; }
+        /* Mobile filter toggle */
+        .filter-sidebar { transition: all 0.3s ease; }
+        @media (max-width: 1023px) {
+            .filter-sidebar.hidden-mobile { display: none; }
+        }
     </style>
 </head>
 <body>
 
-<!-- Header (same as index) -->
+<!-- Header (white background, sticky) -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
-        <div class="flex items-center">
-            <div class="bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-lg flex items-center justify-center">
-                <img src="images/xcarlogo.jpeg"
-                     class="h-10 md:h-12 w-auto rounded-lg object-contain brightness-110 contrast-110"
-                     alt="X Cars Rental Logo"
-                     onerror="this.src='https://placehold.co/200x60/E10600/white?text=X+CARS'">
-            </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3">
+        <!-- Logo -->
+        <div class="flex items-center shrink-0">
+            <img src="images/xcarlogo.jpeg" class="h-9 sm:h-10 md:h-12 w-auto rounded-lg object-contain brightness-200 contrast-110" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/200x60/E10600/white?text=X+CARS'">
         </div>
-        <nav class="hidden md:flex gap-8 font-semibold"><a href="index.html">Home</a><a href="cars.html" class="text-[#E10600]">Cars</a><a href="contact.html">Contact</a></nav>
-        <div class="flex gap-3"><a href="tel:+971503666260" class="text-sm bg-gray-100 px-4 py-2 rounded-full"><i class="fas fa-phone-alt"></i> Call</a><a href="booking.html" class="bg-[#E10600] text-white px-5 py-2 rounded-full font-semibold text-sm">Book Now</a></div>
+        <!-- Navigation -->
+        <nav class="hidden md:flex gap-6 lg:gap-8 font-semibold">
+            <a href="index.html" class="hover:text-[#E10600] transition" data-i18n="nav_home">Home</a>
+            <a href="cars.html" class="text-[#E10600] transition" data-i18n="nav_cars">Cars</a>
+            <a href="contact.html" class="hover:text-[#E10600] transition" data-i18n="nav_contact">Contact</a>
+        </nav>
+        <!-- Right group -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
+            <!-- Language Dropdown -->
+            <div class="relative">
+                <button id="langBtn" class="flex items-center gap-1 bg-gray-100 text-gray-800 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium hover:bg-gray-200 transition border border-gray-300">🌐 English</button>
+                <div id="langMenu" class="hidden absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-xl overflow-hidden z-50 dropdown-menu">
+                    <ul class="text-sm max-h-60 overflow-y-auto">
+                        <li data-lang="en" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇬🇧 English</li>
+                        <li data-lang="ar" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 العربية</li>
+                        <li data-lang="ru" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇷🇺 русский</li>
+                        <li data-lang="zh" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇨🇳 中文</li>
+                        <li data-lang="fr" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇫🇷 Français</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Currency Dropdown -->
+            <div class="relative">
+                <button id="currencyBtn" class="flex items-center gap-1 bg-gray-100 text-gray-800 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium hover:bg-gray-200 transition border border-gray-300">💲 AED</button>
+                <div id="currencyMenu" class="hidden absolute right-0 mt-2 w-36 bg-white shadow-xl rounded-xl overflow-hidden z-50 dropdown-menu">
+                    <ul class="text-sm">
+                        <li data-currency="AED" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇦🇪 AED</li>
+                        <li data-currency="USD" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇺🇸 USD</li>
+                        <li data-currency="EUR" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">🇪🇺 EUR</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Call Button -->
+            <a href="tel:+971503666260" class="bg-gray-100 text-gray-800 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium hover:bg-[#E10600] hover:text-white transition flex items-center gap-1"><i class="fas fa-phone-alt"></i> <span class="hidden xs:inline">Call</span></a>
+            <!-- Book Now -->
+            <a href="booking.html" class="bg-[#E10600] text-white px-3 sm:px-5 py-1.5 sm:py-2 rounded-full font-semibold text-xs sm:text-sm btn-glow shadow-md hover:shadow-lg transition" data-i18n="book_now">Book Now</a>
+        </div>
     </div>
 </header>
 
-<main class="max-w-7xl mx-auto px-5 md:px-8 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
-        <!-- Sidebar Filters -->
-        <div class="lg:w-80 filter-sidebar">
-            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                <h3 class="font-bold text-xl mb-4">🔍 Filter Cars</h3>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        <!-- Mobile Filter Toggle Button -->
+        <div class="lg:hidden mb-4">
+            <button id="toggleFilterBtn" class="w-full bg-white text-[#E10600] border border-[#E10600] py-3 rounded-full font-semibold shadow-sm hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                <i class="fas fa-filter"></i> Filter Cars
+            </button>
+        </div>
+
+        <!-- Sidebar Filters (collapsible on mobile) -->
+        <div id="filterSidebar" class="lg:w-80 filter-sidebar hidden-mobile lg:block">
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm sticky top-24">
+                <h3 class="font-bold text-xl mb-4" data-i18n="filter_cars">🔍 Filter Cars</h3>
                 
-                <div class="mb-6">
-                    <label class="font-semibold text-sm mb-2 block">Price Range (AED/day)</label>
+                <div class="mb-5">
+                    <label class="font-semibold text-sm mb-2 block" data-i18n="price_range">Price Range (AED/day)</label>
                     <input type="range" id="priceRange" min="100" max="800" value="800" class="price-slider">
-                    <div class="flex justify-between mt-2"><span>AED 100</span><span id="priceValue" class="text-[#E10600] font-bold">Up to AED 800</span></div>
+                    <div class="flex justify-between mt-2 text-sm">
+                        <span data-i18n="min_price">AED 100</span>
+                        <span id="priceValue" class="text-[#E10600] font-bold" data-i18n="up_to">Up to AED 800</span>
+                    </div>
                 </div>
 
-                <div class="mb-6">
-                    <label class="font-semibold text-sm mb-2 block">Car Brand</label>
-                    <select id="brandFilter" class="w-full border rounded-xl p-2">
-                        <option value="all">All Brands</option>
+                <div class="mb-5">
+                    <label class="font-semibold text-sm mb-2 block" data-i18n="car_brand">Car Brand</label>
+                    <select id="brandFilter" class="w-full border rounded-xl p-2.5 text-sm">
+                        <option value="all" data-i18n="all_brands">All Brands</option>
                         <option value="Kia">Kia</option>
                         <option value="Hyundai">Hyundai</option>
                         <option value="Toyota">Toyota</option>
@@ -60,49 +107,88 @@
                     </select>
                 </div>
 
-                <div class="mb-6">
-                    <label class="font-semibold text-sm mb-2 block">Car Type</label>
-                    <select id="typeFilter" class="w-full border rounded-xl p-2">
-                        <option value="all">All Types</option>
-                        <option value="Sedan">Sedan</option>
-                        <option value="SUV">SUV</option>
-                        <option value="Hatchback">Hatchback</option>
+                <div class="mb-5">
+                    <label class="font-semibold text-sm mb-2 block" data-i18n="car_type">Car Type</label>
+                    <select id="typeFilter" class="w-full border rounded-xl p-2.5 text-sm">
+                        <option value="all" data-i18n="all_types">All Types</option>
+                        <option value="Sedan" data-i18n="sedan">Sedan</option>
+                        <option value="SUV" data-i18n="suv">SUV</option>
+                        <option value="Hatchback" data-i18n="hatchback">Hatchback</option>
                     </select>
                 </div>
 
-                <div class="mb-6">
-                    <label class="font-semibold text-sm mb-2 block">Fuel Type</label>
-                    <select id="fuelFilter" class="w-full border rounded-xl p-2">
-                        <option value="all">All</option>
-                        <option value="Petrol">Petrol</option>
-                        <option value="Hybrid">Hybrid</option>
+                <div class="mb-5">
+                    <label class="font-semibold text-sm mb-2 block" data-i18n="fuel_type">Fuel Type</label>
+                    <select id="fuelFilter" class="w-full border rounded-xl p-2.5 text-sm">
+                        <option value="all" data-i18n="all_fuels">All</option>
+                        <option value="Petrol" data-i18n="petrol">Petrol</option>
+                        <option value="Hybrid" data-i18n="hybrid">Hybrid</option>
                     </select>
                 </div>
 
-                <button id="resetFilters" class="w-full bg-gray-100 py-2 rounded-full font-semibold hover:bg-gray-200 transition">Reset Filters</button>
+                <button id="resetFilters" class="w-full bg-gray-100 py-2.5 rounded-full font-semibold hover:bg-gray-200 transition text-sm" data-i18n="reset_filters">Reset Filters</button>
             </div>
 
             <!-- Compare Section -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
-                <h3 class="font-bold text-lg mb-3"><i class="fas fa-chart-simple text-[#E10600]"></i> Car Compare</h3>
-                <div id="compareList" class="text-sm text-gray-600 mb-3">No cars selected</div>
-                <button id="compareBtn" class="w-full bg-black text-white py-2 rounded-full text-sm font-semibold">Compare Selected (Max 2)</button>
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm mt-6 sticky top-24">
+                <h3 class="font-bold text-lg mb-3"><i class="fas fa-chart-simple text-[#E10600]"></i> <span data-i18n="car_compare">Car Compare</span></h3>
+                <div id="compareList" class="text-sm text-gray-600 mb-3" data-i18n="no_cars_selected">No cars selected</div>
+                <button id="compareBtn" class="w-full bg-black text-white py-2.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition" data-i18n="compare_selected">Compare Selected (Max 2)</button>
             </div>
         </div>
 
         <!-- Cars Grid -->
         <div class="flex-1">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold">Our Premium Fleet</h1>
-                <p class="text-gray-500"><span id="carCount">14</span> cars available</p>
+            <div class="flex justify-between items-center mb-6 flex-wrap gap-2">
+                <h1 class="text-2xl sm:text-3xl font-bold" data-i18n="our_premium_fleet">Our Premium Fleet</h1>
+                <p class="text-gray-500 text-sm"><span id="carCount">14</span> <span data-i18n="cars_available">cars available</span></p>
             </div>
-            <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            <div id="carsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6"></div>
         </div>
     </div>
 </main>
 
+<footer class="bg-[#111111] text-white mt-16 sm:mt-20 py-8 sm:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div>
+                <div class="bg-white/10 backdrop-blur-sm p-3 rounded-xl inline-flex items-center justify-center mb-4">
+                    <img src="images/logo.jpeg" class="h-16 sm:h-20 w-auto" alt="X Cars Rental Logo" onerror="this.src='https://placehold.co/150x60/E10600/white?text=X+CARS'">
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed" data-i18n="footer_desc">Premium car rental services across UAE since 2020. Drive the latest models with full insurance and fast pickup.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-3 sm:mb-4" data-i18n="quick_links">Quick Links</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="index.html" class="hover:text-white transition" data-i18n="home">Home</a></li>
+                    <li><a href="cars.html" class="hover:text-white transition" data-i18n="our_fleet">Our Fleet</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition" data-i18n="contact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-3 sm:mb-4" data-i18n="contact">Contact</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fas fa-phone-alt w-5 text-[#E10600]"></i><a href="tel:+971503666260" class="hover:text-white transition">+971 50 366 6260</a></li>
+                    <li class="flex items-center gap-2"><i class="fab fa-whatsapp w-5 text-green-500"></i><a href="https://wa.me/971503666260" target="_blank" class="hover:text-white transition">WhatsApp Available</a></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-envelope w-5 text-[#E10600]"></i><a href="mailto:info@xcars.ae" class="hover:text-white transition">info@xcars.ae</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-3 sm:mb-4" data-i18n="follow_us">Follow Us</h4>
+                <div class="flex gap-4 sm:gap-5 text-2xl">
+                    <a href="https://www.instagram.com/x.cars.rental_uq" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://share.google/elvaM9WoxW33UHsfz" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-google"></i></a>
+                    <a href="https://www.tiktok.com/@x.cars.rental" target="_blank" class="text-gray-400 hover:text-[#E10600] transition"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <p class="mt-3 text-xs text-gray-500" data-i18n="follow_text">Follow us for exclusive offers and latest updates</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm" data-i18n="copyright">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance | Fast Pickup</div>
+    </div>
+</footer>
+
 <script>
-    // Updated car list with realistic data and image paths (assuming images are in /images folder)
+    // ==================== CAR DATA ====================
     const cars = [
         { id:1, name:"Kia Pegas", price:150, seats:5, fuel:"Petrol", transmission:"Auto", type:"Sedan", brand:"Kia", img:"images/kia_pegas.JPG" },
         { id:2, name:"Hyundai Accent", price:160, seats:5, fuel:"Petrol", transmission:"Auto", type:"Sedan", brand:"Hyundai", img:"images/hyundai_accent.JPG" },
@@ -115,12 +201,61 @@
         { id:9, name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta.JPG" },
         { id:10, name:"Kia Sportage", price:300, seats:5, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Kia", img:"images/kia_sportage.JPG" },
         { id:11, name:"Nissan Kicks", price:250, seats:5, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Nissan", img:"images/nissan_kicks.JPG" },
-        { id:12, name:"Hyundai Creta", price:280, seats:5, fuel:"Petrol", transmission:"Auto", type:"SUV", brand:"Hyundai", img:"images/hyundai_creta.JPG" }, // duplicate but okay
+        { id:12, name:"Toyota Yaris", price:100, seats:5, fuel:"Petrol", transmission:"Automatic", type:"Sedan", brand:"Toyota", img:"images/toyota_yaris.JPG" },
         { id:13, name:"Kia K4", price:210, seats:5, fuel:"Petrol", transmission:"Auto", type:"Sedan", brand:"Kia", img:"images/kia_k4.JPG" },
+        { id:15, name:"Nissan Sunny", price:90, seats:5, fuel:"Petrol", transmission:"Auto", type:"Sedan", brand:"Nissan", img:"images/nissan_sunny.JPG" },
         { id:14, name:"Toyota Camry", price:260, seats:5, fuel:"Petrol", transmission:"Auto", type:"Sedan", brand:"Toyota", img:"images/toyota_camry.JPG" }
     ];
 
+    // ==================== i18n & Currency ====================
+    let translations = {};
+    let currentLang = localStorage.getItem('language') || 'en';
+    let currentCurrency = localStorage.getItem('currency') || 'AED';
+    const exchangeRates = { AED: 1, USD: 0.27, EUR: 0.25 };
     let compareCars = [];
+
+    async function loadTranslations() {
+        try {
+            const response = await fetch('translations.json');
+            translations = await response.json();
+            applyLanguage(currentLang);
+            applyCurrency(currentCurrency);
+            renderCars();
+        } catch (err) { console.error('Translation error:', err); renderCars(); }
+    }
+
+    function applyLanguage(lang) {
+        if (!translations[lang]) lang = 'en';
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                if (translations[lang][key].includes('<')) el.innerHTML = translations[lang][key];
+                else el.textContent = translations[lang][key];
+            }
+        });
+        const langBtn = document.getElementById('langBtn');
+        if (langBtn) {
+            const langNames = { en: 'English', ar: 'العربية', ru: 'русский', zh: '中文', fr: 'Français' };
+            langBtn.innerHTML = `🌐 ${langNames[lang] || lang.toUpperCase()}`;
+        }
+        localStorage.setItem('language', lang);
+        currentLang = lang;
+    }
+
+    function applyCurrency(currency) {
+        const rate = exchangeRates[currency] || 1;
+        document.querySelectorAll('[data-price-aed]').forEach(el => {
+            const aedValue = parseFloat(el.getAttribute('data-price-aed'));
+            if (!isNaN(aedValue)) {
+                const converted = (aedValue * rate).toFixed(0);
+                el.textContent = `${currency} ${converted}`;
+            }
+        });
+        const currencyBtn = document.getElementById('currencyBtn');
+        if (currencyBtn) currencyBtn.innerHTML = currency === 'AED' ? '💲 AED' : (currency === 'USD' ? '💲 USD' : '💲 EUR');
+        localStorage.setItem('currency', currency);
+        currentCurrency = currency;
+    }
 
     function renderCars() {
         let maxPrice = parseInt(document.getElementById('priceRange').value);
@@ -138,27 +273,42 @@
 
         document.getElementById('carCount').innerText = filtered.length;
         const grid = document.getElementById('carsGrid');
-        grid.innerHTML = filtered.map(car => `
-            <div class="bg-white rounded-2xl overflow-hidden shadow-md car-card">
-                <img src="${car.img}" class="w-full h-48 object-cover" alt="${car.name}" onerror="this.src='https://placehold.co/400x240/EEEEEE/111?text=${car.name.replace(/ /g, '+')}'">
-                <div class="p-5">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-bold text-xl">${car.name}</h3>
-                        <button onclick="toggleCompare(${car.id})" class="compare-btn text-xs ${compareCars.includes(car.id) ? 'bg-[#E10600] text-white' : 'bg-gray-200'} px-3 py-1 rounded-full transition">Compare</button>
-                    </div>
-                    <p class="text-[#E10600] font-bold text-2xl mt-1">AED ${car.price}<span class="text-sm text-gray-500">/day</span></p>
-                    <div class="flex gap-4 text-sm text-gray-500 mt-2 pb-3 border-b">
-                        <span><i class="fas fa-users"></i> ${car.seats} seats</span>
-                        <span><i class="fas fa-gas-pump"></i> ${car.fuel}</span>
-                        <span><i class="fas fa-cog"></i> ${car.transmission}</span>
-                    </div>
-                    <div class="flex gap-2 mt-4">
-                        <a href="car-details.html?id=${car.id}" class="flex-1 bg-black text-white text-center py-2 rounded-full text-sm font-semibold hover:bg-[#E10600] transition">View Details</a>
-                        <a href="booking.html?car=${car.id}" class="flex-1 border-2 border-[#E10600] text-[#E10600] text-center py-2 rounded-full text-sm font-semibold hover:bg-[#E10600] hover:text-white transition">Book Now</a>
+        const rate = exchangeRates[currentCurrency] || 1;
+
+        grid.innerHTML = filtered.map(car => {
+            const convertedPrice = (car.price * rate).toFixed(0);
+            return `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md car-card h-full flex flex-col">
+                    <img src="${car.img}" class="w-full h-44 sm:h-48 object-cover" alt="${car.name}" onerror="this.src='https://placehold.co/400x240/EEEEEE/111?text=${car.name.replace(/ /g, '+')}'">
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start gap-2">
+                            <h3 class="font-bold text-lg sm:text-xl">${car.name}</h3>
+                            <button onclick="toggleCompare(${car.id})" class="compare-btn text-xs ${compareCars.includes(car.id) ? 'bg-[#E10600] text-white' : 'bg-gray-200'} px-2.5 py-1 rounded-full transition shrink-0">Compare</button>
+                        </div>
+                        <p class="text-[#E10600] font-bold text-xl sm:text-2xl mt-1">
+                            <span data-price-aed="${car.price}" class="currency-price">${currentCurrency} ${convertedPrice}</span>
+                            <span class="text-xs sm:text-sm text-gray-500">/day</span>
+                        </p>
+                        <div class="flex gap-3 text-xs sm:text-sm text-gray-500 mt-2 pb-3 border-b">
+                            <span><i class="fas fa-users"></i> ${car.seats} seats</span>
+                            <span><i class="fas fa-gas-pump"></i> ${car.fuel}</span>
+                            <span><i class="fas fa-cog"></i> ${car.transmission}</span>
+                        </div>
+                        <div class="flex gap-2 mt-4">
+                            <a href="car-details.html?id=${car.id}" class="flex-1 bg-black text-white text-center py-2 rounded-full text-xs sm:text-sm font-semibold hover:bg-[#E10600] transition" data-i18n="view_details">View Details</a>
+                            <a href="booking.html?car=${car.id}" class="flex-1 border-2 border-[#E10600] text-[#E10600] text-center py-2 rounded-full text-xs sm:text-sm font-semibold hover:bg-[#E10600] hover:text-white transition" data-i18n="book_now">Book Now</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
+
+        if (translations[currentLang]) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+            });
+        }
     }
 
     window.toggleCompare = function(carId) {
@@ -176,21 +326,15 @@
 
     function updateCompareUI() {
         let compareNames = compareCars.map(id => cars.find(c => c.id === id)?.name).filter(Boolean);
-        document.getElementById('compareList').innerHTML = compareNames.length ? compareNames.join(' vs ') : 'No cars selected';
+        const compareListDiv = document.getElementById('compareList');
+        if (compareListDiv) {
+            compareListDiv.innerHTML = compareNames.length ? compareNames.join(' vs ') : (translations[currentLang]?.no_cars_selected || 'No cars selected');
+        }
     }
 
-    document.getElementById('compareBtn').onclick = () => {
-        if(compareCars.length === 2) {
-            let car1 = cars.find(c => c.id === compareCars[0]);
-            let car2 = cars.find(c => c.id === compareCars[1]);
-            alert(`COMPARE:\n${car1.name} - AED ${car1.price}/day, ${car1.seats} seats, ${car1.fuel}\nVS\n${car2.name} - AED ${car2.price}/day, ${car2.seats} seats, ${car2.fuel}`);
-        } else {
-            alert('Please select exactly 2 cars to compare');
-        }
-    };
-
+    // Filter events
     document.getElementById('priceRange').oninput = (e) => {
-        document.getElementById('priceValue').innerText = `Up to AED ${e.target.value}`;
+        document.getElementById('priceValue').innerText = (translations[currentLang]?.up_to || 'Up to') + ` AED ${e.target.value}`;
         renderCars();
     };
     document.getElementById('brandFilter').onchange = () => renderCars();
@@ -198,16 +342,60 @@
     document.getElementById('fuelFilter').onchange = () => renderCars();
     document.getElementById('resetFilters').onclick = () => {
         document.getElementById('priceRange').value = 800;
-        document.getElementById('priceValue').innerText = 'Up to AED 800';
+        document.getElementById('priceValue').innerText = (translations[currentLang]?.up_to || 'Up to') + ' AED 800';
         document.getElementById('brandFilter').value = 'all';
         document.getElementById('typeFilter').value = 'all';
         document.getElementById('fuelFilter').value = 'all';
         renderCars();
     };
+    document.getElementById('compareBtn').onclick = () => {
+        if(compareCars.length === 2) {
+            let car1 = cars.find(c => c.id === compareCars[0]);
+            let car2 = cars.find(c => c.id === compareCars[1]);
+            alert(`COMPARE:\n${car1.name} - ${currentCurrency} ${(car1.price * exchangeRates[currentCurrency]).toFixed(0)}/day, ${car1.seats} seats, ${car1.fuel}\nVS\n${car2.name} - ${currentCurrency} ${(car2.price * exchangeRates[currentCurrency]).toFixed(0)}/day, ${car2.seats} seats, ${car2.fuel}`);
+        } else {
+            alert('Please select exactly 2 cars to compare');
+        }
+    };
 
-    renderCars();
+    // Language & Currency dropdowns
+    document.getElementById('langBtn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('langMenu').classList.toggle('hidden'); });
+    document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('currencyMenu').classList.toggle('hidden'); });
+    window.addEventListener('click', (e) => {
+        if (!e.target.closest('#langBtn') && !e.target.closest('#langMenu')) document.getElementById('langMenu')?.classList.add('hidden');
+        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyMenu')) document.getElementById('currencyMenu')?.classList.add('hidden');
+    });
+
+    document.querySelectorAll('#langMenu li').forEach(li => {
+        li.addEventListener('click', () => {
+            const lang = li.getAttribute('data-lang');
+            if (lang) { applyLanguage(lang); document.getElementById('priceValue').innerText = (translations[lang]?.up_to || 'Up to') + ` AED ${document.getElementById('priceRange').value}`; updateCompareUI(); renderCars(); document.getElementById('langMenu').classList.add('hidden'); }
+        });
+    });
+    document.querySelectorAll('#currencyMenu li').forEach(li => {
+        li.addEventListener('click', () => {
+            const currency = li.getAttribute('data-currency');
+            if (currency) { applyCurrency(currency); renderCars(); document.getElementById('currencyMenu').classList.add('hidden'); }
+        });
+    });
+
+    // Mobile filter toggle
+    const filterSidebar = document.getElementById('filterSidebar');
+    const toggleBtn = document.getElementById('toggleFilterBtn');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            filterSidebar.classList.toggle('hidden-mobile');
+        });
+    }
+
+    // URL parameter for type filter (from index)
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type');
+    if (typeParam && document.getElementById('typeFilter')) {
+        document.getElementById('typeFilter').value = typeParam;
+    }
+
+    loadTranslations();
 </script>
-
-<footer class="bg-[#111111] text-white mt-20 py-8 text-center text-sm">© 2025 X Cars Rental UAE | Brand New 2026 Fleet | Full Insurance</footer>
 </body>
 </html>
